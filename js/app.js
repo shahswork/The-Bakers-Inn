@@ -399,13 +399,7 @@ function proceedToCheckout() {
   window.open(`https://wa.me/15551234567?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
-function toggleWishlist(btn, id) {
-  btn.classList.toggle('active');
-  btn.textContent = btn.classList.contains('active') ? '♥' : '♡';
-  if (btn.classList.contains('active')) {
-    showToast('❤️ Added to wishlist!', 'success');
-  }
-}
+
 
 // ──────────────────────────────────────────────
 // Toast Notifications
