@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Cake Builder — The Bakers Inn</title>
+  <meta name="description"
+    content="Design your dream cake! Choose flavors, size, decoration style, and upload your reference images. We'll bring your vision to life.">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .builder-section {
+      background: var(--gray-soft);
+      padding: var(--section-gap) 0;
+    }
+
+    .step-nav {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: white;
+      border-radius: var(--radius);
+      padding: 8px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 32px;
+      overflow-x: auto;
+    }
+
+    .step-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 12px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--gray-mid);
+      white-space: nowrap;
+      transition: all .2s;
+      min-width: max-content;
+    }
+
+    .step-nav-item .step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--gray-soft);
+      color: var(--gray-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .75rem;
+      font-weight: 700;
+      transition: all .2s;
+    }
+
+    .step-nav-item.active {
+      color: var(--rose-deep);
+      background: var(--blush);
+    }
+
+    .step-nav-item.active .step-num {
+      background: var(--rose-deep);
+      color: white;
+    }
+
+    .step-nav-item.done {
+      color: var(--charcoal);
+    }
+
+    .step-nav-item.done .step-num {
+      background: #3aab6d;
+      color: white;
+    }
+
+    .step-connector {
+      width: 3rem;
+      height: 2px;
+      background: var(--gray-soft);
+      flex-shrink: 0;
+    }
+
+    .step-panel {
+      display: none;
+      animation: stepIn .3s ease;
+    }
+
+    .step-panel.active {
+      display: block;
+    }
+
+    @keyframes stepIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .step-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+    }
+
+    .color-swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all .2s;
+    }
+
+    .color-swatch.selected,
+    .color-swatch:hover {
+      border-color: var(--rose-deep);
+      transform: scale(1.2);
+    }
+
+    .cake-preview {
+      position: relative;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-size: 3rem;
+    }
+
+    .cake-preview .tier-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .tier {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all .4s;
+      position: relative;
+    }
+
+    .tier span {
+      font-size: .55rem;
+      font-weight: 700;
+      position: absolute;
+      color: white;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+      letter-spacing: .05em;
+    }
+
+    .decoration-preview {
+      font-size: 1.2rem;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .order-summary-submitted {
+      background: linear-gradient(135deg, var(--blush), var(--cream));
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Announcement -->
+  <div class="announcement-bar">
+    ✨ Custom cakes require 48-hour advance notice. <a href="index.html#contact">Contact us</a> for rush orders.
+  </div>
+
+  <!-- Nav -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">🎂</div>
+        <div>
+          <div class="logo-text">The Bakers Inn</div>
+          <div class="logo-sub">Bakery & Patisserie</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="builder.html" class="active">Custom Cake</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-cart-btn" id="cartToggle">🛒<span class="cart-count" id="cartCount">0</span></button>
+        <a href="https://wa.me/923111111987" target="_blank" class="btn btn-primary btn-sm"><i
+            class="fab fa-whatsapp"></i> Order Now</a>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">🏠 Home</a><a href="shop.html">🛍️ Shop</a><a href="builder.html">🎨 Custom Cake Builder</a><a
+      href="gallery.html">📸 Gallery</a><a href="index.html#contact">📍
+      Contact</a>
+    <div class="mobile-cta"><a href="https://wa.me/923111111987" target="_blank" class="btn btn-whatsapp"
+        style="width:100%;justify-content:center;"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a></div>
+  </div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Custom Cake Builder</span></div>
+      <span class="section-label">Design Your Dream</span>
+      <h1 class="section-title">Custom Cake Builder 🎨</h1>
+      <div class="divider"></div>
+      <p class="section-subtitle" style="margin:12px auto 0;">Choose every detail — we'll bake it to perfection.</p>
+    </div>
+  </div>
+
+  <!-- Builder -->
+  <section class="builder-section">
+    <div class="container">
+      <div class="builder-layout">
+
+        <!-- Left: Steps -->
+        <div>
+          <!-- Step Navigation -->
+          <div class="step-nav" id="stepNav">
+            <div class="step-nav-item active" data-step="1" onclick="goToStep(1)">
+              <div class="step-num">1</div> Flavor & Base
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-nav-item" data-step="2" onclick="goToStep(2)">
+              <div class="step-num">2</div> Size & Tiers
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-nav-item" data-step="3" onclick="goToStep(3)">
+              <div class="step-num">3</div> Decoration
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-nav-item" data-step="4" onclick="goToStep(4)">
+              <div class="step-num">4</div> Message & Extras
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-nav-item" data-step="5" onclick="goToStep(5)">
+              <div class="step-num">5</div> Order
+            </div>
+          </div>
+
+          <!-- Step 1: Flavor -->
+          <div class="step-panel active" id="step-1">
+            <h2 style="font-family:var(--font-serif);font-size:1.5rem;font-weight:700;margin-bottom:6px;">Choose Your
+              Flavor</h2>
+            <p style="color:var(--gray-mid);font-size:.9rem;margin-bottom:24px;">The perfect base is everything. What do
+              you love?</p>
+            <div class="option-grid" id="flavorGrid">
+              <div class="option-card selected" data-flavor="vanilla"
+                onclick="selectOption(this,'flavor','Vanilla Classic','🍦',0)">
+                <div class="opt-icon">🍦</div>
+                <div class="opt-name">Vanilla Classic</div>
+                <div class="opt-price">Base price</div>
+              </div>
+              <div class="option-card" data-flavor="chocolate"
+                onclick="selectOption(this,'flavor','Chocolate Fudge','🍫',0)">
+                <div class="opt-icon">🍫</div>
+                <div class="opt-name">Chocolate Fudge</div>
+                <div class="opt-price">Base price</div>
+              </div>
+              <div class="option-card" data-flavor="strawberry"
+                onclick="selectOption(this,'flavor','Strawberry Dream','🍓',0)">
+                <div class="opt-icon">🍓</div>
+                <div class="opt-name">Strawberry Dream</div>
+                <div class="opt-price">Base price</div>
+              </div>
+              <div class="option-card" data-flavor="red-velvet"
+                onclick="selectOption(this,'flavor','Red Velvet','❤️',5)">
+                <div class="opt-icon">❤️</div>
+                <div class="opt-name">Red Velvet</div>
+                <div class="opt-price">+Rs 350.00</div>
+              </div>
+              <div class="option-card" data-flavor="lemon" onclick="selectOption(this,'flavor','Lemon Zest','🍋',0)">
+                <div class="opt-icon">🍋</div>
+                <div class="opt-name">Lemon Zest</div>
+                <div class="opt-price">Base price</div>
+              </div>
+              <div class="option-card" data-flavor="caramel"
+                onclick="selectOption(this,'flavor','Salted Caramel','🍮',5)">
+                <div class="opt-icon">🍮</div>
+                <div class="opt-name">Salted Caramel</div>
+                <div class="opt-price">+Rs 550.00</div>
+              </div>
+              <div class="option-card" data-flavor="funfetti" onclick="selectOption(this,'flavor','Funfetti','🎊',0)">
+                <div class="opt-icon">🎊</div>
+                <div class="opt-name">Funfetti</div>
+                <div class="opt-price">Base price</div>
+              </div>
+              <div class="option-card" data-flavor="coffee" onclick="selectOption(this,'flavor','Coffee Mocha','☕',5)">
+                <div class="opt-icon">☕</div>
+                <div class="opt-name">Coffee Mocha</div>
+                <div class="opt-price">+Rs 300.00</div>
+              </div>
+            </div>
+
+            <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin:28px 0 12px;">Filling /
+              Frosting</h3>
+            <div class="option-grid" id="fillingGrid">
+              <div class="option-card selected" onclick="selectOption(this,'filling','Buttercream','🧈',0)">
+                <div class="opt-icon">🧈</div>
+                <div class="opt-name">Buttercream</div>
+                <div class="opt-price">Included</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'filling','Whipped Cream','🤍',0)">
+                <div class="opt-icon">🤍</div>
+                <div class="opt-name">Whipped Cream</div>
+                <div class="opt-price">Included</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'filling','Cream Cheese','🧀',3)">
+                <div class="opt-icon">🧀</div>
+                <div class="opt-name">Cream Cheese</div>
+                <div class="opt-price">+Rs 333.00</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'filling','Ganache','🍫',5)">
+                <div class="opt-icon">🍫</div>
+                <div class="opt-name">Ganache</div>
+                <div class="opt-price">+Rs 500.00</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'filling','Jam & Fresh Fruit','🍓',8)">
+                <div class="opt-icon">🍓</div>
+                <div class="opt-name">Fresh Fruit Jam</div>
+                <div class="opt-price">+Rs 180.00</div>
+              </div>
+            </div>
+
+            <div class="step-footer">
+              <div></div>
+              <button class="btn btn-primary" onclick="goToStep(2)">Next: Size & Tiers <i
+                  class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Step 2: Size -->
+          <div class="step-panel" id="step-2">
+            <h2 style="font-family:var(--font-serif);font-size:1.5rem;font-weight:700;margin-bottom:6px;">Choose Size &
+              Tiers</h2>
+            <p style="color:var(--gray-mid);font-size:.9rem;margin-bottom:24px;">How big should your cake be? How many
+              layers?</p>
+
+            <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin-bottom:16px;">Cake Size
+            </h3>
+            <div class="option-grid" id="sizeGrid">
+              <div class='option-card' onclick='selectOption(this,"size","4\" Mini (4 servings)","🔵",35)'>
+                <div class="opt-icon" style="font-size:1.2rem;">4"</div>
+                <div class="opt-name">Mini</div>
+                <div class="opt-price">Rs 1300 · 4 servings</div>
+              </div>
+
+              <div class="option-card selected"
+                onclick="selectOption(this,'size','6&quot; Small (8–10 servings)','🟡',45)">
+                <div class="opt-icon" style="font-size:1.2rem;">6"</div>
+                <div class="opt-name">Small</div>
+                <div class="opt-price">Rs 1850 · 8–10 servings</div>
+              </div>
+
+              <div class="option-card" onclick="selectOption(this,'size','8&quot; Medium (16–20 servings)','🟠',65)">
+                <div class="opt-icon" style="font-size:1.2rem;">8"</div>
+                <div class="opt-name">Medium</div>
+                <div class="opt-price">Rs 2150 · 16–20 servings</div>
+              </div>
+
+              <div class="option-card" onclick="selectOption(this,'size','10&quot; Large (30–40 servings)','🔴',90)">
+                <div class="opt-icon" style="font-size:1.2rem;">10"</div>
+                <div class="opt-name">Large</div>
+                <div class="opt-price">Rs 2590 · 30–40 servings</div>
+              </div>
+
+              <div class="option-card"
+                onclick="selectOption(this,'size','12&quot; Extra Large (50+ servings)','⭕',120)">
+                <div class="opt-icon" style="font-size:1.2rem;">12"</div>
+                <div class="opt-name">Extra Large</div>
+                <div class="opt-price">Rs 4100 · 50+ servings</div>
+              </div>
+            </div>
+
+            <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin:28px 0 16px;">Number of
+              Tiers</h3>
+            <div class="option-grid" id="tierGrid">
+              <div class="option-card selected" onclick="selectOption(this,'tiers','1 Tier','1️⃣',0)">
+                <div class="opt-icon">1️⃣</div>
+                <div class="opt-name">1 Tier</div>
+                <div class="opt-price">Standard</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'tiers','2 Tiers','2️⃣',40)">
+                <div class="opt-icon">2️⃣</div>
+                <div class="opt-name">2 Tiers</div>
+                <div class="opt-price">+Rs 1340</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'tiers','3 Tiers','3️⃣',90)">
+                <div class="opt-icon">3️⃣</div>
+                <div class="opt-name">3 Tiers</div>
+                <div class="opt-price">+Rs 2350</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'tiers','4 Tiers','4️⃣',150)">
+                <div class="opt-icon">4️⃣</div>
+                <div class="opt-name">4 Tiers</div>
+                <div class="opt-price">+Rs 3150</div>
+              </div>
+            </div>
+
+            <div class="step-footer">
+              <button class="btn btn-secondary" onclick="goToStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+              <button class="btn btn-primary" onclick="goToStep(3)">Next: Decoration <i
+                  class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Step 3: Decoration -->
+          <div class="step-panel" id="step-3">
+            <h2 style="font-family:var(--font-serif);font-size:1.5rem;font-weight:700;margin-bottom:6px;">Decoration
+              Style</h2>
+            <p style="color:var(--gray-mid);font-size:.9rem;margin-bottom:24px;">How should your cake look? Select a
+              style and color theme.</p>
+
+            <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin-bottom:16px;">Decoration
+              Theme</h3>
+            <div class="option-grid" id="decorGrid">
+              <div class="option-card selected" onclick="selectOption(this,'decoration','Classic Smooth','🎀',0)">
+                <div class="opt-icon">🎀</div>
+                <div class="opt-name">Classic Smooth</div>
+                <div class="opt-price">Included</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'decoration','Rustic Naked','🌿',0)">
+                <div class="opt-icon">🌿</div>
+                <div class="opt-name">Rustic Naked</div>
+                <div class="opt-price">Included</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'decoration','Floral Fresh','🌸',25)">
+                <div class="opt-icon">🌸</div>
+                <div class="opt-name">Fresh Florals</div>
+                <div class="opt-price">+Rs 350</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'decoration','Sugar Flowers','🌺',45)">
+                <div class="opt-icon">🌺</div>
+                <div class="opt-name">Sugar Flowers</div>
+                <div class="opt-price">+Rs 550</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'decoration','Ombre Swirl','🌈',15)">
+                <div class="opt-icon">🌈</div>
+                <div class="opt-name">Ombre Swirl</div>
+                <div class="opt-price">+Rs 450</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'decoration','Drip Glaze','💧',20)">
+                <div class="opt-icon">💧</div>
+                <div class="opt-name">Drip Glaze</div>
+                <div class="opt-price">+Rs 520</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'decoration','Geometric Pattern','💎',30)">
+                <div class="opt-icon">💎</div>
+                <div class="opt-name">Geometric</div>
+                <div class="opt-price">+Rs 330</div>
+              </div>
+              <div class="option-card" onclick="selectOption(this,'decoration','Metallic Luster','✨',35)">
+                <div class="opt-icon">✨</div>
+                <div class="opt-name">Metallic Luster</div>
+                <div class="opt-price">+Rs 750</div>
+              </div>
+            </div>
+
+            <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin:28px 0 12px;">Color Theme
+            </h3>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:24px;" id="colorPicker">
+              <div class="color-swatch selected" style="background:#E8A4B8;" data-color="Pink Blush"
+                onclick="selectColor(this,'Pink Blush')"></div>
+              <div class="color-swatch" style="background:#F5D0DD;" data-color="Rose Light"
+                onclick="selectColor(this,'Rose Light')"></div>
+              <div class="color-swatch" style="background:#C9A84C;" data-color="Gold"
+                onclick="selectColor(this,'Gold')"></div>
+              <div class="color-swatch" style="background:#FFFFFF;border:2px solid #E5E5E5;" data-color="Pure White"
+                onclick="selectColor(this,'Pure White')"></div>
+              <div class="color-swatch" style="background:#2C2C2C;" data-color="Black & White"
+                onclick="selectColor(this,'Black & White')"></div>
+              <div class="color-swatch" style="background:#ADD8E6;" data-color="Baby Blue"
+                onclick="selectColor(this,'Baby Blue')"></div>
+              <div class="color-swatch" style="background:#90EE90;" data-color="Mint Green"
+                onclick="selectColor(this,'Mint Green')"></div>
+              <div class="color-swatch" style="background:#DDA0DD;" data-color="Lavender"
+                onclick="selectColor(this,'Lavender')"></div>
+              <div class="color-swatch" style="background:#FFD700;" data-color="Sunflower"
+                onclick="selectColor(this,'Sunflower')"></div>
+              <div class="color-swatch" style="background:#FF7F7F;" data-color="Coral Red"
+                onclick="selectColor(this,'Coral Red')"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Custom Color Note (optional)</label>
+              <input type="text" class="form-input" id="customColor"
+                placeholder="e.g., dusty rose, sage green, navy blue..." oninput="updateSummary()">
+            </div>
+
+            <div class="step-footer">
+              <button class="btn btn-secondary" onclick="goToStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+              <button class="btn btn-primary" onclick="goToStep(4)">Next: Message <i
+                  class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Step 4: Message & Extras -->
+          <div class="step-panel" id="step-4">
+            <h2 style="font-family:var(--font-serif);font-size:1.5rem;font-weight:700;margin-bottom:6px;">Personal
+              Touches</h2>
+            <p style="color:var(--gray-mid);font-size:.9rem;margin-bottom:24px;">Add your message, upload inspiration
+              photos, and choose extras.</p>
+
+            <div class="form-group">
+              <label class="form-label">Message on Cake (optional)</label>
+              <input type="text" class="form-input" id="cakeMessage" maxlength="60"
+                placeholder="e.g., Happy Birthday Sarah! 🎉" oninput="updateSummary()">
+              <div style="font-size:.75rem;color:var(--gray-mid);margin-top:4px;"><span id="msgCount">0</span>/60
+                characters</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Occasion</label>
+              <select class="form-select" id="occasionSelect" onchange="updateSummary()">
+                <option value="">Select occasion...</option>
+                <option>Birthday</option>
+                <option>Wedding</option>
+                <option>Anniversary</option>
+                <option>Baby Shower</option>
+                <option>Graduation</option>
+                <option>Valentine's Day</option>
+                <option>Christmas</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <!-- Design Upload -->
+            <div class="form-group">
+              <label class="form-label">Upload Design Reference (optional)</label>
+              <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">📸</div>
+                <p><strong>Click to browse</strong> or drag & drop your inspiration photos</p>
+                <p style="font-size:.8rem;margin-top:4px;">PNG, JPG, WEBP up to 10MB</p>
+                <input type="file" id="fileInput" accept="image/*" multiple style="display:none;"
+                  onchange="handleFiles(this.files)">
+              </div>
+              <div class="upload-preview" id="uploadPreview"></div>
+            </div>
+
+            <!-- Add-ons -->
+            <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin-bottom:16px;">Add-ons &
+              Extras</h3>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;"
+              id="addonsGrid">
+              <label
+                style="display:flex;align-items:center;gap:12px;padding:14px;background:white;border-radius:var(--radius-sm);border:1.5px solid #E5E5E5;cursor:pointer;transition:all .2s;"
+                onmouseenter="this.style.borderColor='var(--rose)'"
+                onmouseleave="this.style.borderColor=this.querySelector('input').checked?'var(--rose-deep)':'#E5E5E5'">
+                <input type="checkbox" value="candles" data-price="5"
+                  style="width:18px;height:18px;accent-color:var(--rose-deep);" onchange="updateAddons()">
+                <div>
+                  <div style="font-weight:600;font-size:.875rem;">Birthday Candles</div>
+                  <div style="font-size:.78rem;color:var(--gray-mid);">+Rs 250.00</div>
+                </div>
+              </label>
+              <label
+                style="display:flex;align-items:center;gap:12px;padding:14px;background:white;border-radius:var(--radius-sm);border:1.5px solid #E5E5E5;cursor:pointer;transition:all .2s;">
+                <input type="checkbox" value="topper" data-price="15"
+                  style="width:18px;height:18px;accent-color:var(--rose-deep);" onchange="updateAddons()">
+                <div>
+                  <div style="font-weight:600;font-size:.875rem;">Custom Topper</div>
+                  <div style="font-size:.78rem;color:var(--gray-mid);">+Rs 450.00</div>
+                </div>
+              </label>
+              <label
+                style="display:flex;align-items:center;gap:12px;padding:14px;background:white;border-radius:var(--radius-sm);border:1.5px solid #E5E5E5;cursor:pointer;transition:all .2s;">
+                <input type="checkbox" value="box" data-price="8"
+                  style="width:18px;height:18px;accent-color:var(--rose-deep);" onchange="updateAddons()">
+                <div>
+                  <div style="font-weight:600;font-size:.875rem;">Gift Box & Ribbon</div>
+                  <div style="font-size:.78rem;color:var(--gray-mid);">+Rs 380.00</div>
+                </div>
+              </label>
+              <label
+                style="display:flex;align-items:center;gap:12px;padding:14px;background:white;border-radius:var(--radius-sm);border:1.5px solid #E5E5E5;cursor:pointer;transition:all .2s;">
+                <input type="checkbox" value="rush" data-price="25"
+                  style="width:18px;height:18px;accent-color:var(--rose-deep);" onchange="updateAddons()">
+                <div>
+                  <div style="font-weight:600;font-size:.875rem;">Rush Order (24hr)</div>
+                  <div style="font-size:.78rem;color:var(--gray-mid);">+Rs 800.00</div>
+                </div>
+              </label>
+              <label
+                style="display:flex;align-items:center;gap:12px;padding:14px;background:white;border-radius:var(--radius-sm);border:1.5px solid #E5E5E5;cursor:pointer;transition:all .2s;">
+                <input type="checkbox" value="photo" data-price="20"
+                  style="width:18px;height:18px;accent-color:var(--rose-deep);" onchange="updateAddons()">
+                <div>
+                  <div style="font-weight:600;font-size:.875rem;">Edible Photo Print</div>
+                  <div style="font-size:.78rem;color:var(--gray-mid);">+Rs 320.00</div>
+                </div>
+              </label>
+              <label
+                style="display:flex;align-items:center;gap:12px;padding:14px;background:white;border-radius:var(--radius-sm);border:1.5px solid #E5E5E5;cursor:pointer;transition:all .2s;">
+                <input type="checkbox" value="gluten" data-price="10"
+                  style="width:18px;height:18px;accent-color:var(--rose-deep);" onchange="updateAddons()">
+                <div>
+                  <div style="font-weight:600;font-size:.875rem;">Gluten-Free Base</div>
+                  <div style="font-size:.78rem;color:var(--gray-mid);">+Rs 380.00</div>
+                </div>
+              </label>
+            </div>
+
+            <div class="form-group" style="margin-top:24px;">
+              <label class="form-label">Special Instructions</label>
+              <textarea class="form-textarea" id="specialInstructions" rows="3"
+                placeholder="Any allergies, special requests, or additional details for our bakers..."
+                oninput="updateSummary()"></textarea>
+            </div>
+
+            <div class="step-footer">
+              <button class="btn btn-secondary" onclick="goToStep(3)"><i class="fas fa-arrow-left"></i> Back</button>
+              <button class="btn btn-primary" onclick="goToStep(5)">Review Order <i
+                  class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Step 5: Order Review -->
+          <div class="step-panel" id="step-5">
+            <h2 style="font-family:var(--font-serif);font-size:1.5rem;font-weight:700;margin-bottom:6px;">Review & Order
+            </h2>
+            <p style="color:var(--gray-mid);font-size:.9rem;margin-bottom:24px;">Everything looks perfect? Place your
+              order!</p>
+
+            <div
+              style="background:white;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);margin-bottom:24px;">
+              <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin-bottom:16px;">Your Order
+                Summary</h3>
+              <div id="finalSummary" style="font-size:.9rem;"></div>
+            </div>
+
+            <div
+              style="background:white;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);margin-bottom:24px;">
+              <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin-bottom:16px;">Delivery
+                Details</h3>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">Full Name *</label>
+                  <input type="text" class="form-input" id="customerName" placeholder="Your full name" required>
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">Phone / WhatsApp *</label>
+                  <input type="tel" class="form-input" id="customerPhone" placeholder="+92 312 3456 789" required>
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-input" id="customerEmail" placeholder="your@email.com">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">Delivery Date *</label>
+                  <input type="date" class="form-input" id="deliveryDate" required>
+                </div>
+                <div class="form-group" style="margin-bottom:0;grid-column:span 2;">
+                  <label class="form-label">Delivery Address *</label>
+                  <input type="text" class="form-input" id="deliveryAddress" placeholder="Full delivery address"
+                    required>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-footer">
+              <button class="btn btn-secondary" onclick="goToStep(4)"><i class="fas fa-arrow-left"></i> Back</button>
+              <div style="display:flex;gap:12px;">
+                <button class="btn btn-whatsapp btn-lg" onclick="orderViaWhatsApp()">
+                  <i class="fab fa-whatsapp"></i> Order via WhatsApp
+                </button>
+                <button class="btn btn-primary btn-lg" onclick="submitOrder()">
+                  <i class="fas fa-check"></i> Place Order
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Live Preview Summary -->
+        <!-- <div class="builder-summary">
+          <div class="summary-header">
+            <h3>🎂 Your Custom Cake</h3>
+            <p style="font-size:.8rem;color:var(--gray-mid);margin-top:4px;">Live preview updates as you choose</p>
+          </div>
+
+          <div class="summary-preview" id="cakePreview">
+            <div class="cake-preview">
+              <div class="tier-display" id="tierDisplay">
+                <div class="tier" id="cakeTier1"
+                  style="width:100px;height:40px;background:var(--rose-light);margin-bottom:-4px;">
+                  <span>Layer 1</span>
+                </div>
+                <div class="tier" id="cakePlate"
+                  style="width:130px;height:12px;background:var(--cream);border-radius:50%;"></div>
+              </div>
+              <div class="decoration-preview" id="decoPreview">🎀</div>
+            </div>
+          </div>
+
+          <div class="summary-items">
+            <div class="summary-row"><span class="key">Flavor</span><span class="val" id="s-flavor">Vanilla Classic
+                🍦</span></div>
+            <div class="summary-row"><span class="key">Filling</span><span class="val" id="s-filling">Buttercream
+                🧈</span></div>
+            <div class="summary-row"><span class="key">Size</span><span class="val" id="s-size">6" Small</span></div>
+            <div class="summary-row"><span class="key">Tiers</span><span class="val" id="s-tiers">1 Tier</span></div>
+            <div class="summary-row"><span class="key">Decoration</span><span class="val" id="s-decoration">Classic
+                Smooth 🎀</span></div>
+            <div class="summary-row"><span class="key">Color</span><span class="val" id="s-color">Pink Blush</span>
+            </div>
+            <div class="summary-row"><span class="key">Message</span><span class="val" id="s-message"
+                style="font-style:italic;color:var(--gray-mid);">—</span></div>
+            <div class="summary-row"><span class="key">Add-ons</span><span class="val" id="s-addons">None</span></div>
+          </div>
+
+          <div class="summary-total">
+            <span class="lbl">Estimated Total</span>
+            <span class="price" id="totalPrice">$45.00</span>
+          </div>
+
+          <div class="summary-cta">
+            <a href="https://wa.me/923111111987?text=Hi!%20I'd%20like%20to%20discuss%20a%20custom%20cake%20order."
+              target="_blank" class="btn btn-whatsapp">
+              <i class="fab fa-whatsapp"></i> Discuss via WhatsApp
+            </a>
+            <p style="font-size:.75rem;color:var(--gray-mid);text-align:center;margin-top:8px;">
+              * Final price confirmed after consultation
+            </p>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>🛒 Your Cart</h3><button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="empty-icon">🎂</div><strong>Your cart is empty</strong>
+        <p>Add some delicious cakes!</p>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-totals">
+        <div class="cart-total-row"><span>Subtotal</span><span id="cartSubtotal">Rs 0.00</span></div>
+        <div class="cart-total-row"><span>Delivery</span><span id="cartDelivery">Rs 320.00</span></div>
+        <div class="cart-total-row total"><span>Total</span><span id="cartTotal">Rs 0.00</span></div>
+      </div>
+      <div class="cart-checkout-btns">
+        <a href="https://wa.me/923111111987" target="_blank" id="cartWhatsApp" class="btn btn-whatsapp"><i
+            class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+        <button class="btn btn-primary" onclick="proceedToCheckout()"><i class="fas fa-credit-card"></i>
+          Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <a href="https://wa.me/923111111987" target="_blank" class="sticky-wa"><i class="fab fa-whatsapp"></i></a>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Builder State
+    const builderState = {
+      flavor: { name: 'Vanilla Classic', icon: '🍦', price: 1200 },
+      filling: { name: 'Buttercream', icon: '🧈', price: 800 },
+      size: { name: '6" Small (8–10 servings)', icon: '🟡', price: 800 },
+      tiers: { name: '1 Tier', icon: '1️⃣', price: 400 },
+      decoration: { name: 'Classic Smooth', icon: '🎀', price: 200 },
+      color: 'Pink Blush',
+      message: '',
+      occasion: '',
+      addons: [],
+      addonsTotal: 0,
+    };
+
+    let currentStep = 1;
+    const totalSteps = 5;
+
+    function goToStep(n) {
+      if (n < 1 || n > totalSteps) return;
+      // Mark previous steps as done
+      document.querySelectorAll('.step-nav-item').forEach((el, i) => {
+        const stepNum = i / 2 + 1; // accounting for connectors in DOM
+        el.classList.remove('active');
+      });
+      document.querySelectorAll('.step-nav-item').forEach(el => {
+        const s = parseInt(el.dataset.step);
+        el.classList.remove('active', 'done');
+        if (s === n) el.classList.add('active');
+        else if (s < n) el.classList.add('done');
+      });
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById(`step-${n}`).classList.add('active');
+      currentStep = n;
+      if (n === 5) renderFinalSummary();
+      window.scrollTo({ top: 200, behavior: 'smooth' });
+    }
+
+    function selectOption(el, key, name, icon, price) {
+      const grid = el.closest('.option-grid') || el.parentNode;
+      grid.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      builderState[key] = { name, icon, price };
+      updateSummary();
+      updateCakePreview();
+    }
+
+    function selectColor(el, color) {
+      document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+      el.classList.add('selected');
+      builderState.color = color;
+      updateSummary();
+      updateCakePreview();
+    }
+
+    function updateAddons() {
+      const checked = document.querySelectorAll('#addonsGrid input:checked');
+      builderState.addons = [];
+      builderState.addonsTotal = 0;
+      checked.forEach(c => {
+        const label = c.nextElementSibling.firstElementChild.textContent;
+        const price = parseFloat(c.dataset.price) || 0;
+        builderState.addons.push(label);
+        builderState.addonsTotal += price;
+      });
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const msg = document.getElementById('cakeMessage');
+      if (msg) {
+        builderState.message = msg.value;
+        const counter = document.getElementById('msgCount');
+        if (counter) counter.textContent = msg.value.length;
+      }
+      const occ = document.getElementById('occasionSelect');
+      if (occ) builderState.occasion = occ.value;
+
+      // Update sidebar
+      document.getElementById('s-flavor').textContent = `${builderState.flavor.name} ${builderState.flavor.icon}`;
+      document.getElementById('s-filling').textContent = `${builderState.filling.name} ${builderState.filling.icon}`;
+      document.getElementById('s-size').textContent = builderState.size.name.split('(')[0].trim();
+      document.getElementById('s-tiers').textContent = builderState.tiers.name;
+      document.getElementById('s-decoration').textContent = `${builderState.decoration.name} ${builderState.decoration.icon}`;
+      document.getElementById('s-color').textContent = builderState.color;
+      document.getElementById('s-message').textContent = builderState.message || '—';
+      document.getElementById('s-addons').textContent = builderState.addons.length ? builderState.addons.join(', ') : 'None';
+
+      const total = builderState.size.price + builderState.tiers.price + builderState.flavor.price +
+        builderState.filling.price + builderState.decoration.price + builderState.addonsTotal;
+      document.getElementById('totalPrice').textContent = `Rs ${total.toFixed(2)}`;
+    }
+
+    function updateCakePreview() {
+      const decoEl = document.getElementById('decoPreview');
+      if (decoEl) decoEl.textContent = builderState.decoration.icon || '🎀';
+    }
+
+    function renderFinalSummary() {
+      const el = document.getElementById('finalSummary');
+      if (!el) return;
+      const total = builderState.size.price + builderState.tiers.price + builderState.flavor.price +
+        builderState.filling.price + builderState.decoration.price + builderState.addonsTotal;
+      el.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.875rem;">
+      <div><strong>Flavor:</strong> ${builderState.flavor.name} ${builderState.flavor.icon}</div>
+      <div><strong>Filling:</strong> ${builderState.filling.name}</div>
+      <div><strong>Size:</strong> ${builderState.size.name.split('(')[0].trim()}</div>
+      <div><strong>Tiers:</strong> ${builderState.tiers.name}</div>
+      <div><strong>Decoration:</strong> ${builderState.decoration.name}</div>
+      <div><strong>Color:</strong> ${builderState.color}</div>
+      <div style="grid-column:span 2;"><strong>Message:</strong> ${builderState.message || '(none)'}</div>
+      ${builderState.addons.length ? `<div style="grid-column:span 2;"><strong>Add-ons:</strong> ${builderState.addons.join(', ')}</div>` : ''}
+    </div>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--gray-soft);display:flex;justify-content:space-between;font-weight:700;font-size:1.05rem;">
+      <span>Estimated Total:</span>
+      <span style="color:var(--rose-deep);">Rs ${total.toFixed(2)}</span>
+    </div>
+  `;
+      // Set min date to tomorrow
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 2);
+      document.getElementById('deliveryDate').min = tomorrow.toISOString().split('T')[0];
+    }
+
+    function orderViaWhatsApp() {
+      const name = document.getElementById('customerName').value;
+      const phone = document.getElementById('customerPhone').value;
+      const date = document.getElementById('deliveryDate').value;
+      const addr = document.getElementById('deliveryAddress').value;
+      if (!name || !phone || !date || !addr) { showToast('Please fill in all required fields.', 'error'); return; }
+      const total = builderState.size.price + builderState.tiers.price + builderState.flavor.price +
+        builderState.filling.price + builderState.decoration.price + builderState.addonsTotal;
+      const msg = `Hi The Bakers Inn! I'd like to order a custom cake:
+  
+🎂 *Custom Cake Order*
+Name: ${name}
+Phone: ${phone}
+Delivery Date: ${date}
+Address: ${addr}
+
+*Cake Details:*
+• Flavor: ${builderState.flavor.name}
+• Filling: ${builderState.filling.name}
+• Size: ${builderState.size.name}
+• Tiers: ${builderState.tiers.name}
+• Decoration: ${builderState.decoration.name}
+• Color: ${builderState.color}
+• Message: ${builderState.message || 'None'}
+• Add-ons: ${builderState.addons.join(', ') || 'None'}
+
+💰 Estimated Total: Rs ${total.toFixed(2)}`;
+      window.open(`https://wa.me/923111111987?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    async function submitOrder() {
+      const name = document.getElementById('customerName').value;
+      const phone = document.getElementById('customerPhone').value;
+      const date = document.getElementById('deliveryDate').value;
+      const addr = document.getElementById('deliveryAddress').value;
+      if (!name || !phone || !date || !addr) { showToast('Please fill in all required fields.', 'error'); return; }
+      const total = builderState.size.price + builderState.tiers.price + builderState.flavor.price +
+        builderState.filling.price + builderState.decoration.price + builderState.addonsTotal;
+
+      try {
+        const orderId = 'SD' + Date.now().toString(36).toUpperCase();
+        const res = await fetch('tables/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            order_id: orderId,
+            customer_name: name,
+            customer_phone: phone,
+            customer_email: document.getElementById('customerEmail').value,
+            delivery_date: date,
+            delivery_address: addr,
+            cake_details: JSON.stringify(builderState),
+            total_price: total,
+            status: 'received',
+            notes: document.getElementById('specialInstructions').value,
+            type: 'custom'
+          })
+        });
+        if (res) {
+          showToast('🎉 Order placed! We\'ll contact you soon.', 'success');
+          document.querySelector('#step-5 .step-footer').innerHTML = `
+        <div class="order-summary-submitted" style="width:100%;">
+          <div style="font-size:3rem;margin-bottom:12px;">🎉</div>
+          <h3 style="font-family:var(--font-serif);font-size:1.4rem;font-weight:700;margin-bottom:8px;">Order Received!</h3>
+          <p style="color:var(--gray-mid);margin-bottom:16px;">Your order ID: <strong style="color:var(--rose-deep);">${orderId}</strong></p>
+          <p style="font-size:.875rem;color:var(--gray-mid);">We'll contact you at ${phone} within 2 hours to confirm your order.</p>
+          <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
+            <a href="https://wa.me/923111111987?text=${encodeURIComponent(`Hi The Bakers Inn! 👋
+
+🎂 Custom Cake Order
+
+🆔 Order ID: ${orderId}
+
+👤 Name: ${name}
+📞 Phone: ${phone}
+📅 Delivery Date: ${date}
+📍 Address: ${addr}
+
+🍰 Cake Details:
+• Flavor: ${builderState.flavor.name}
+• Filling: ${builderState.filling.name}
+• Size: ${builderState.size.name}
+• Tiers: ${builderState.tiers.name}
+• Decoration: ${builderState.decoration.name}
+• Color: ${builderState.color}
+• Message: ${builderState.message || 'None'}
+• Add-ons: ${builderState.addons.join(', ') || 'None'}
+
+💰 Total: Rs ${total.toFixed(2)}
+
+📝 Notes: ${document.getElementById('specialInstructions').value || 'None'}
+`)}" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat with Us</a>
+          </div>
+        </div>
+      `;
+        }
+      } catch (e) {
+        showToast('Order submitted! We\'ll contact you soon.', 'success');
+      }
+    }
+
+    // File Upload
+    document.getElementById('uploadZone').addEventListener('click', () => document.getElementById('fileInput').click());
+    document.getElementById('uploadZone').addEventListener('dragover', (e) => { e.preventDefault(); e.currentTarget.classList.add('drag-over'); });
+    document.getElementById('uploadZone').addEventListener('dragleave', (e) => e.currentTarget.classList.remove('drag-over'));
+    document.getElementById('uploadZone').addEventListener('drop', (e) => {
+      e.preventDefault(); e.currentTarget.classList.remove('drag-over');
+      handleFiles(e.dataTransfer.files);
+    });
+
+    function handleFiles(files) {
+      const preview = document.getElementById('uploadPreview');
+      Array.from(files).forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const div = document.createElement('div');
+          div.className = 'upload-thumb';
+          div.innerHTML = `<img src="${e.target.result}" alt="Upload preview"><button class="remove-thumb" onclick="this.parentNode.remove()">✕</button>`;
+          preview.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      goToStep(1);
+      updateSummary();
+    });
+  </script>
+</body>
+
+</html>

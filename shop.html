@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — The Bakers Inn</title>
+  <meta name="description" content="Browse our full menu of handcrafted cakes. Birthday cakes, wedding cakes, cupcakes, and custom designs. Order online or via WhatsApp.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .shop-layout { display: grid; grid-template-columns: 260px 1fr; gap: 40px; align-items: start; }
+    .shop-sidebar { position: sticky; top: 90px; }
+    .filter-card { background: var(--white); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+    .filter-card h4 { font-family: var(--font-serif); font-weight: 700; margin-bottom: 16px; font-size: 1rem; }
+    .filter-option { display: flex; align-items: center; gap: 10px; padding: 8px 0; cursor: pointer; }
+    .filter-option input[type="checkbox"], .filter-option input[type="radio"] { width: 16px; height: 16px; accent-color: var(--rose-deep); }
+    .filter-option label { font-size: .875rem; cursor: pointer; color: var(--charcoal); }
+    .filter-option label:hover { color: var(--rose-deep); }
+    .price-range { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .price-range input { width: 80px; padding: 8px 10px; border: 1.5px solid #E5E5E5; border-radius: 8px; font-size: .875rem; }
+    .sort-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+    .sort-bar .result-count { font-size: .875rem; color: var(--gray-mid); }
+    .sort-bar select { padding: 8px 16px; border: 1.5px solid #E5E5E5; border-radius: 8px; font-size: .875rem; outline: none; cursor: pointer; }
+    .product-detail-modal { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .product-detail-modal.open { opacity: 1; pointer-events: all; }
+    .modal-box { background: white; border-radius: var(--radius); max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; }
+    .modal-img { height: 100%; min-height: 400px; object-fit: cover; border-radius: var(--radius) 0 0 var(--radius); }
+    .modal-body { padding: 32px; display: flex; flex-direction: column; }
+    .modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; background: rgba(0,0,0,.4); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    @media (max-width: 900px) { .shop-layout { grid-template-columns: 1fr; } .shop-sidebar { position: static; } .modal-box { grid-template-columns: 1fr; } .modal-img { min-height: 250px; border-radius: var(--radius) var(--radius) 0 0; } }
+    .no-results { text-align: center; padding: 80px 20px; color: var(--gray-mid); }
+    .no-results .emoji { font-size: 4rem; display: block; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- Announcement -->
+<div class="announcement-bar">
+  🎉 Free delivery on orders over $80! Use code <strong>The Bakers Inn</strong> · <a href="shop.html">Shop Now →</a>
+</div>
+
+<!-- Nav -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon">🎂</div>
+      <div>
+        <div class="logo-text">The Bakers Inn</div>
+        <div class="logo-sub">Bakery & Patisserie</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="builder.html">Custom Cake</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-cart-btn" id="cartToggle" aria-label="Cart">🛒<span class="cart-count" id="cartCount">0</span></button>
+      <a href="https://wa.me/923111111987?text=Hi!%20I'd%20like%20to%20order." target="_blank" class="btn btn-primary btn-sm">
+        <i class="fab fa-whatsapp"></i> Order Now
+      </a>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Home</a>
+  <a href="shop.html">🛍️ Shop</a>
+  <a href="builder.html">🎨 Custom Cake Builder</a>
+  <a href="gallery.html">📸 Gallery</a>
+  <a href="index.html#contact">📍 Contact</a>
+  <div class="mobile-cta"><a href="https://wa.me/923111111987" target="_blank" class="btn btn-whatsapp" style="width:100%;justify-content:center;"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a></div>
+</div>
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Shop</span></div>
+    <span class="section-label">Our Menu</span>
+    <h1 class="section-title">Handcrafted Cakes & Desserts</h1>
+    <div class="divider"></div>
+    <p class="section-subtitle" style="margin:12px auto 0;">Fresh, made-to-order — every cake baked just for you.</p>
+  </div>
+</div>
+
+<!-- Category Tabs -->
+<div style="background:white;border-bottom:1px solid var(--gray-soft);position:sticky;top:70px;z-index:100;padding:0 20px;">
+  <div class="container" style="overflow-x:auto;">
+    <div style="display:flex;gap:4px;padding:12px 0;min-width:max-content;">
+      <button class="chip active" data-cat="all" onclick="filterCategory(this,'all')">🎉 All Cakes</button>
+      <button class="chip" data-cat="birthday" onclick="filterCategory(this,'birthday')">🎂 Birthday</button>
+      <button class="chip" data-cat="wedding" onclick="filterCategory(this,'wedding')">💒 Wedding</button>
+      <button class="chip" data-cat="cupcakes" onclick="filterCategory(this,'cupcakes')">🧁 Cupcakes</button>
+      <button class="chip" data-cat="custom" onclick="filterCategory(this,'custom')">✨ Custom</button>
+      <button class="chip" data-cat="seasonal" onclick="filterCategory(this,'seasonal')">🍂 Seasonal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<section class="section" style="background:var(--gray-soft);">
+  <div class="container">
+    <div class="shop-layout">
+
+      <!-- Sidebar Filters -->
+      <aside class="shop-sidebar">
+        <div class="filter-card">
+          <h4>Filter By</h4>
+          <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:10px;">Price Range</div>
+          <div class="price-range">
+            <input type="number" id="priceMin" placeholder="Rs 2000" min="2000" onchange="applyFilters()">
+            <span style="color:var(--gray-mid);">–</span>
+            <input type="number" id="priceMax" placeholder="Rs 6500" min="6500" onchange="applyFilters()">
+          </div>
+        </div>
+
+        <div class="filter-card">
+          <h4>Flavour</h4>
+          <div id="flavourFilters">
+            <label class="filter-option"><input type="checkbox" value="vanilla" onchange="applyFilters()"><label>Vanilla</label></label>
+            <label class="filter-option"><input type="checkbox" value="chocolate" onchange="applyFilters()"><label>Chocolate</label></label>
+            <label class="filter-option"><input type="checkbox" value="strawberry" onchange="applyFilters()"><label>Strawberry</label></label>
+            <label class="filter-option"><input type="checkbox" value="red-velvet" onchange="applyFilters()"><label>Red Velvet</label></label>
+            <label class="filter-option"><input type="checkbox" value="lemon" onchange="applyFilters()"><label>Lemon</label></label>
+            <label class="filter-option"><input type="checkbox" value="caramel" onchange="applyFilters()"><label>Caramel</label></label>
+          </div>
+        </div>
+
+        <div class="filter-card">
+          <h4>Occasion</h4>
+          <div class="filter-option"><input type="checkbox" value="birthday" onchange="applyFilters()"><label>Birthday</label></div>
+          <div class="filter-option"><input type="checkbox" value="wedding" onchange="applyFilters()"><label>Wedding</label></div>
+          <div class="filter-option"><input type="checkbox" value="anniversary" onchange="applyFilters()"><label>Anniversary</label></div>
+          <div class="filter-option"><input type="checkbox" value="baby-shower" onchange="applyFilters()"><label>Baby Shower</label></div>
+          <div class="filter-option"><input type="checkbox" value="graduation" onchange="applyFilters()"><label>Graduation</label></div>
+        </div>
+
+        <div class="filter-card">
+          <h4>Dietary</h4>
+          <div class="filter-option"><input type="checkbox" value="gluten-free" onchange="applyFilters()"><label>🌾 Gluten Free</label></div>
+          <div class="filter-option"><input type="checkbox" value="vegan" onchange="applyFilters()"><label>🌱 Vegan</label></div>
+          <div class="filter-option"><input type="checkbox" value="nut-free" onchange="applyFilters()"><label>🥜 Nut Free</label></div>
+          <div class="filter-option"><input type="checkbox" value="sugar-free" onchange="applyFilters()"><label>🍃 Sugar Free</label></div>
+        </div>
+
+        <button class="btn btn-secondary" style="width:100%;" onclick="clearFilters()">
+          <i class="fas fa-times"></i> Clear Filters
+        </button>
+      </aside>
+
+      <!-- Product Grid -->
+      <div>
+        <div class="sort-bar">
+          <span class="result-count" id="resultCount">Showing all products</span>
+          <select id="sortSelect" onchange="sortProducts()">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Best Rated</option>
+            <option value="newest">Newest</option>
+          </select>
+        </div>
+        <div class="products-grid" id="shopGrid">
+          <!-- Rendered by JS -->
+        </div>
+        <div id="noResults" class="no-results" style="display:none;">
+          <span class="emoji">🔍</span>
+          <h3 style="font-family:var(--font-serif);margin-bottom:8px;">No cakes found</h3>
+          <p>Try adjusting your filters or <a href="#" onclick="clearFilters()" style="color:var(--rose-deep);">clear all filters</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Product Detail Modal -->
+<div class="product-detail-modal" id="productModal">
+  <div class="modal-box" id="modalBox" style="position:relative;">
+    <button class="modal-close" id="modalClose">✕</button>
+    <img src="" alt="" id="modalImg" class="modal-img">
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- Cart Sidebar -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header"><h3>🛒 Your Cart</h3><button class="cart-close" id="cartClose">✕</button></div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><div class="empty-icon">🎂</div><strong>Your cart is empty</strong><p>Add some delicious cakes!</p></div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-totals">
+      <div class="cart-total-row"><span>Subtotal</span><span id="cartSubtotal">Rs 0.00</span></div>
+      <div class="cart-total-row"><span>Delivery</span><span id="cartDelivery">Rs 320.00</span></div>
+      <div class="cart-total-row total"><span>Total</span><span id="cartTotal">Rs 0.00</span></div>
+    </div>
+    <div class="cart-checkout-btns">
+      <a href="https://wa.me/923111111987" target="_blank" id="cartWhatsApp" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+      <button class="btn btn-primary" onclick="proceedToCheckout()"><i class="fas fa-credit-card"></i> Checkout</button>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky WA -->
+<a href="https://wa.me/923111111987?text=Hi!" target="_blank" class="sticky-wa"><i class="fab fa-whatsapp"></i></a>
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/app.js"></script>
+<script>
+let currentCategory = 'all';
+let filteredProducts = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Check URL param
+  const params = new URLSearchParams(window.location.search);
+  const cat = params.get('cat');
+  if (cat) {
+    const btn = document.querySelector(`[data-cat="${cat}"]`);
+    if (btn) filterCategory(btn, cat);
+  } else {
+    renderShop(getFallbackProducts());
+  }
+
+  // Modal close
+  document.getElementById('modalClose').onclick = closeModal;
+  document.getElementById('productModal').onclick = (e) => {
+    if (e.target === document.getElementById('productModal')) closeModal();
+  };
+});
+
+function filterCategory(btn, cat) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  currentCategory = cat;
+  applyFilters();
+}
+
+function applyFilters() {
+  let products = getFallbackProducts();
+  if (currentCategory !== 'all') {
+    products = products.filter(p => p.category === currentCategory);
+  }
+  const minPrice = parseFloat(document.getElementById('priceMin').value) || 2000;
+  const maxPrice = parseFloat(document.getElementById('priceMax').value) || 9999;
+  products = products.filter(p => p.price >= minPrice && p.price <= maxPrice);
+  filteredProducts = products;
+  renderShop(products);
+}
+
+function sortProducts() {
+  const sort = document.getElementById('sortSelect').value;
+  let products = filteredProducts.length ? [...filteredProducts] : getFallbackProducts();
+  switch(sort) {
+    case 'price-low': products.sort((a,b) => a.price - b.price); break;
+    case 'price-high': products.sort((a,b) => b.price - a.price); break;
+    case 'rating': products.sort((a,b) => b.rating - a.rating); break;
+    case 'newest': products.sort((a,b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)); break;
+    default: break;
+  }
+  renderShop(products, false);
+}
+
+function clearFilters() {
+  document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+  document.getElementById('priceMin').value = '';
+  document.getElementById('priceMax').value = '';
+  currentCategory = 'all';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.querySelector('[data-cat="all"]').classList.add('active');
+  filteredProducts = [];
+  renderShop(getFallbackProducts());
+}
+
+function renderShop(products, animate = true) {
+  const grid = document.getElementById('shopGrid');
+  const noResults = document.getElementById('noResults');
+  const count = document.getElementById('resultCount');
+  if (!products.length) {
+    grid.innerHTML = '';
+    noResults.style.display = 'block';
+    count.textContent = '0 products found';
+    return;
+  }
+  noResults.style.display = 'none';
+  count.textContent = `Showing ${products.length} product${products.length !== 1 ? 's' : ''}`;
+  grid.innerHTML = products.map((p, i) => createProductCard(p, true)).join('');
+}
+
+function openProductModal(id) {
+  const p = getFallbackProducts().find(p => p.id === id);
+  if (!p) return;
+  document.getElementById('modalImg').src = p.image;
+  document.getElementById('modalImg').alt = p.name;
+  document.getElementById('modalBody').innerHTML = `
+    <div style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--rose-deep);margin-bottom:8px;">${p.categoryLabel}</div>
+    <h2 style="font-family:var(--font-serif);font-size:1.6rem;font-weight:700;margin-bottom:8px;">${p.name}</h2>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+      <span class="stars" style="color:var(--gold);">${'★'.repeat(Math.floor(p.rating))}</span>
+      <span style="font-weight:700;">${p.rating}</span>
+      <span style="color:var(--gray-mid);font-size:.85rem;">(${p.reviews} reviews)</span>
+    </div>
+    <p style="font-size:.9rem;color:var(--gray-mid);line-height:1.7;margin-bottom:16px;">${p.description}</p>
+    <div style="background:var(--gray-soft);border-radius:var(--radius-sm);padding:16px;margin-bottom:16px;">
+      <div style="font-size:.8rem;font-weight:600;margin-bottom:8px;color:var(--charcoal);">Details</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.82rem;color:var(--gray-mid);">
+        ${p.details ? p.details.map(d => `<div><strong style="color:var(--charcoal);">${d.k}:</strong> ${d.v}</div>`).join('') : ''}
+      </div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <span style="font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--rose-deep);">$${p.price.toFixed(2)}</span>
+      ${p.oldPrice ? `<span style="text-decoration:line-through;color:var(--gray-mid);">$${p.oldPrice.toFixed(2)}</span>` : ''}
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:auto;">
+      <button class="btn btn-primary" onclick="addToCart(${JSON.stringify(p).replace(/"/g,'&quot;')});closeModal();">
+        <i class="fas fa-shopping-cart"></i> Add to Cart
+      </button>
+      <a href="https://wa.me/923111111987?text=Hi!%20I'd%20like%20to%20order%20the%20${encodeURIComponent(p.name)}%20for%20$${p.price}" 
+         target="_blank" class="btn btn-whatsapp">
+        <i class="fab fa-whatsapp"></i> Order via WhatsApp
+      </a>
+      <a href="builder.html" class="btn btn-secondary btn-sm">
+        <i class="fas fa-magic"></i> Customize This Cake
+      </a>
+    </div>
+  `;
+  document.getElementById('productModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('productModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — The Bakers Inn</title>
+  <meta name="description"
+    content="Browse our cake gallery. Real cakes made for real celebrations — weddings, birthdays, custom designs, and more.">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .masonry-grid {
+      columns: 3;
+      column-gap: 16px;
+    }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      display: block;
+    }
+
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      transition: transform .4s var(--ease);
+    }
+
+    .masonry-item:hover img {
+      transform: scale(1.04);
+    }
+
+    .masonry-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, .65), transparent 50%);
+      opacity: 0;
+      transition: opacity .3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 16px;
+      color: white;
+    }
+
+    .masonry-item:hover .masonry-overlay {
+      opacity: 1;
+    }
+
+    .masonry-overlay h3 {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .masonry-overlay p {
+      font-size: .78rem;
+      opacity: .85;
+    }
+
+    @media (max-width: 768px) {
+      .masonry-grid {
+        columns: 2;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .masonry-grid {
+        columns: 1;
+      }
+    }
+
+    .gallery-filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="announcement-bar">
+    📸 Like what you see? <a href="builder.html">Design your own cake</a> or <a
+      href="https://wa.me/923111111987">message us on WhatsApp</a>!
+  </div>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">🎂</div>
+        <div>
+          <div class="logo-text">The Bakers Inn</div>
+          <div class="logo-sub">Bakery & Patisserie</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="builder.html">Custom Cake</a>
+        <a href="gallery.html" class="active">Gallery</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-cart-btn" id="cartToggle">🛒<span class="cart-count" id="cartCount">0</span></button>
+        <a href="https://wa.me/923111111987" target="_blank" class="btn btn-primary btn-sm"><i
+            class="fab fa-whatsapp"></i> Order Now</a>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">🏠 Home</a><a href="shop.html">🛍️ Shop</a><a href="builder.html">🎨 Custom Cake Builder</a><a
+      href="gallery.html">📸 Gallery</a><a href="index.html#contact">📍
+      Contact</a>
+    <div class="mobile-cta"><a href="https://wa.me/923111111987" target="_blank" class="btn btn-whatsapp"
+        style="width:100%;justify-content:center;"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a></div>
+  </div>
+
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Gallery</span></div>
+      <span class="section-label">Our Creations</span>
+      <h1 class="section-title">A Gallery of Sweet Moments</h1>
+      <div class="divider"></div>
+      <p class="section-subtitle" style="margin:12px auto 0;">Every cake tells a story. Browse our portfolio of real
+        celebrations we've been honored to be part of.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <!-- Filter Tabs -->
+      <div class="gallery-filter-tabs fade-up">
+        <button class="chip active" onclick="filterGallery(this,'all')">All Cakes</button>
+        <button class="chip" onclick="filterGallery(this,'birthday')">🎂 Birthday</button>
+        <button class="chip" onclick="filterGallery(this,'wedding')">💒 Wedding</button>
+        <button class="chip" onclick="filterGallery(this,'cupcakes')">🧁 Cupcakes</button>
+        <button class="chip" onclick="filterGallery(this,'custom')">✨ Custom</button>
+      </div>
+
+      <!-- Masonry Gallery -->
+      <div class="masonry-grid fade-up" id="galleryGrid"></div>
+
+      <div class="text-center" style="margin-top:48px;">
+        <a href="builder.html" class="btn btn-primary btn-lg fade-up">
+          <i class="fas fa-magic"></i> Create Your Own Masterpiece
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instagram CTA -->
+  <section class="section-sm" style="background:linear-gradient(135deg,var(--blush),var(--cream));">
+    <div class="container text-center">
+      <i class="fab fa-instagram" style="font-size:2.5rem;color:#E1306C;display:block;margin-bottom:12px;"></i>
+      <h2 style="font-family:var(--font-serif);font-size:1.6rem;font-weight:700;margin-bottom:8px;">Follow Us on
+        Instagram</h2>
+      <p style="color:var(--gray-mid);margin-bottom:20px;">@thebakers_inn · Daily creations, behind-the-scenes, and
+        inspiration</p>
+      <a href="https://instagram.com/thebakers_inn" target="_blank" class="btn btn-primary">
+        <i class="fab fa-instagram"></i> Follow @thebakers_inn
+      </a>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" onclick="closeLightbox()">✕</button>
+    <div style="position:relative;max-width:90vw;max-height:90vh;text-align:center;">
+      <img src="" alt="" id="lightboxImg" style="max-width:100%;max-height:80vh;border-radius:var(--radius-sm);">
+      <div style="color:white;margin-top:12px;">
+        <div id="lightboxTitle" style="font-family:var(--font-serif);font-size:1.2rem;font-weight:600;"></div>
+        <div id="lightboxDesc" style="font-size:.85rem;opacity:.75;margin-top:4px;"></div>
+      </div>
+      <button onclick="prevPhoto()"
+        style="position:absolute;left:-60px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:white;width:44px;height:44px;border-radius:50%;font-size:1.2rem;cursor:pointer;">‹</button>
+      <button onclick="nextPhoto()"
+        style="position:absolute;right:-60px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:white;width:44px;height:44px;border-radius:50%;font-size:1.2rem;cursor:pointer;">›</button>
+    </div>
+  </div>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>🛒 Your Cart</h3><button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="empty-icon">🎂</div><strong>Your cart is empty</strong>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-totals">
+        <div class="cart-total-row"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+        <div class="cart-total-row"><span>Delivery</span><span id="cartDelivery">$8.00</span></div>
+        <div class="cart-total-row total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+      </div>
+      <div class="cart-checkout-btns">
+        <a href="https://wa.me/923111111987" target="_blank" id="cartWhatsApp" class="btn btn-whatsapp"><i
+            class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+        <button class="btn btn-primary" onclick="proceedToCheckout()"><i class="fas fa-credit-card"></i>
+          Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <a href="https://wa.me/923111111987" target="_blank" class="sticky-wa"><i class="fab fa-whatsapp"></i></a>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/app.js"></script>
+  <script>
+    const galleryItems = [
+      { id: 1, src: 'https://sspark.genspark.ai/cfimages?u1=a21I9PPTtJSzKSRhyeePkZG164V9dlMMgZjcupU6zvU0uN3PPMwfRFhY%2B580ULPvzwAj%2FCxiL3xDr2ASWXpZDpJP%2FcrJa2iqgAfnZT5cCrVdUmU2d9geX6Ni2gRB%2BnskRCC2QJRVB2SY1dxUXhBQoP%2F%2B6ZsmlCPVK71I&u2=%2BbUkbHXdg8EQRpvW&width=2560', title: 'Tall Elegant White Wedding', desc: 'Multi-tier wedding cake with sugar flowers', cat: 'wedding' },
+      { id: 2, src: 'https://sspark.genspark.ai/cfimages?u1=rplYFRyqH1P2PT12CKB4Img4dQEPYSUEnfy8c4C6LNrqgx5T4prd2Qt0WFsOAHbeLNlawzMnPrrCDWIAe157KmiKlK%2BSk2ysrtAvp5CaFbwaIzY6VY3bGF6A0AvuNsc6s1OwOkr0C%2FBk5eI%3D&u2=nIkRhoX6rwjAXv6U&width=2560', title: 'Fairytale Birthday Cake', desc: 'Pink vintage-style birthday celebration', cat: 'birthday' },
+      { id: 3, src: 'https://sspark.genspark.ai/cfimages?u1=%2FT2%2BsGJjgvZFdFgBg70bInZhyD%2FipjyskQmPEMax8MCAjw6zeKKr7AgU5TK5uM5mwDHGGMbkPGvYfndQKCKUul972R467t594QLN332hIaUm%2Bw%3D%3D&u2=lqEl9P6xSDWYgGrx&width=2560', title: 'Artisan Cupcake Collection', desc: 'Assorted flavors with premium frosting', cat: 'cupcakes' },
+      { id: 4, src: 'https://sspark.genspark.ai/cfimages?u1=17%2FLDpq78ibkWskSlY8K23vSmLwUKPXdP5u4kRclwcn%2BtbF6rqjLnXLEllQIwfThZ4RuNAaI89QCljEo4OEDOwEXDaIiRuRS%2BzoGzGtdjlU5X9SuUJ%2BH%2Bf8BcbpWV%2BWf8Kyl9X1aX%2BpwJSvJAbSJqsIq1Be8fjH967jt6ix7lGguSZCsAvY%2BNDc9&u2=y%2FbjeMiYgYP%2BDaVb&width=2560', title: 'Royal Wedding Tier', desc: '4-tier floral cascade wedding masterpiece', cat: 'wedding' },
+      { id: 5, src: 'https://sspark.genspark.ai/cfimages?u1=p4pbvIuDscmF8F0%2F1effKKx9t0mxvHv8hVbFE2GAwvwG2fvyYy%2Fv7MA7eCp8id3sxeyf0tIzu3k0lR1l8Ele%2Ff3CXM%2Bg%2FGQtULnSD0X22yh%2BInZ3gGk0Sc3cY%2Ba0xOBPr0T3DfZMkq6y0kECRNqS%2Fg%3D%3D&u2=3ZUV3T5hL1zSu0UH&width=2560', title: 'Sugar Flower Wedding', desc: 'Handcrafted sugar flower cascade', cat: 'wedding' },
+      { id: 6, src: 'https://sspark.genspark.ai/cfimages?u1=SkS3MfSd4V5%2FPXgxVhTHKtYsP8DeHoiQjT2tutjLMSEP9tlInUR0RYJyjyJpEiewF11tszkzc71W3ci9oyFPOfoyGfeqENv8JjC7IDQQx1WE6uhSpFCuRz93y34knvAQNLccLbl86AxebrxSfiBRHmhCZBhwzPRNASEsGHTmImL5rqJWujQnH2j8U793qhmyG9jiiXKi7b6fI%2BPp1bpO5M3EjMW%2F6M1rMH7F1eRI6JQJ482swiMSh7Y4quCt047QLjK9WJgEv2zYxs7zeVbG1zPqSAsJEVJ134ZC&u2=A91XyIcNxRtmZqWw&width=2560', title: 'Colorful Custom Creation', desc: 'Bespoke custom artistic design', cat: 'custom' },
+      { id: 7, src: 'https://sspark.genspark.ai/cfimages?u1=8qnxPOfAIlIWBiZulmltUcH4xB60oljX%2B8o8OAHHC91eeaSDxfaW5MaGszHGxYgpFmP0oY%2Blyor0fR144XtFG1fpIUOiu%2B%2BwPOBt9%2BD7rVVm4MQEpLgBx0imyWwcxMvmM2JQnQhfjKD5DnTl6gTxTfJ8&u2=HUEelAtSr2FD8zjW&width=2560', title: 'Luxury Floral Fondant', desc: 'Premium fondant with handpainted florals', cat: 'custom' },
+      { id: 8, src: 'https://sspark.genspark.ai/cfimages?u1=lNDzkYSmZy6bx9hu%2FeD276oQubgPtY28XRUuaF4L7zc28acIkPSUmSSTx6sJRjqq8ma%2FG0fjnRsYeJVAbr2pFfE6wzrvCzqHuC3G5ys3WA%3D%3D&u2=yjq%2FofnIEyz6%2FBa%2F&width=2560', title: 'Classic Pink Birthday', desc: 'Pink vanilla bean celebration cake', cat: 'birthday' },
+      { id: 9, src: 'https://sspark.genspark.ai/cfimages?u1=KcW1WkI%2BA6X%2BS6kTSRnMarw%2F%2BPM2kr1zRL6rU7pc9ym%2F%2BglbM67F6jVTiAHPGDK7ivSsqYhn9SzqxhbjtK0zpJ9MTqA%2BYx6Ph26l%2FUsi6A%3D%3D&u2=wUD3w4XRhhAhwX1M&width=2560', title: 'Pink & Gold Birthday', desc: 'Elegant pink and gold birthday showpiece', cat: 'birthday' },
+      { id: 10, src: 'https://sspark.genspark.ai/cfimages?u1=6VOVNyGC8BRjlRH662AZoB04fCAQOZUVSi%2FJ8qVbX9ndDSMwgRh%2FT9jITpkxE3ut2bQymMSOxnUvw0G6xeWd3XKf67UHsnZwhmk6LnSI%2BIf4Noql3pV5jg%2BYcl5E3hweWCkOONGuKTKbBlsrczcCKmM7yXAqRsft56WuKVvaB9ni3iXrcveZbYndPS7ravMMle%2Bo0l3436su1dbwAltB4R8YwJL1pzQg4FlCrNTWieAnHbXEHUP7ISzFF%2FYWzmAiQMN4gfwfeAwcd1zjU057BLIeA3hkYL%2BNMcwrzjaPl1wI70yYrcbfz1IB%2B2t%2FlKYP0relVaSrcUM%3D&u2=%2Fr0EG8UzmWQwFZ67&width=2560', title: 'Six-Tier Royal Wedding', desc: 'Grand six-tier white wedding masterpiece', cat: 'wedding' },
+      { id: 11, src: 'https://sspark.genspark.ai/cfimages?u1=etRn8wWM90dU3hDRjqe97MHtOQvG5yMBWIY6f2550%2Fr%2BroHNCCFoFuO9cLIi4607q1Wn0HAN0OSMXajQbHl3xDUOE9uHu5DBywGEs2C%2FSrEssyKGSd%2BCV%2BHkX%2FgYFDimM8%2BKp4pcsmoj0GwRE%2FJvyTN1jBiX6Xt1I8Bm9n566Ik%3D&u2=fOR%2BMYjcp0mX9Zk7&width=2560', title: 'Cupcake Boutique Display', desc: 'Fresh daily cupcake selection', cat: 'cupcakes' },
+      { id: 12, src: 'https://sspark.genspark.ai/cfimages?u1=8p235LgSFyMBDp0rFCefgn3%2Bhk2vFae5waKQ88rG65QPVjaQEDHC7yFD9zSXHldR0CVrlP3dqichZlweARseLbSokokks1LjbN0koMajvfBZe1aHAK03MJcixbVkujcxcrI%3D&u2=u6246WYgKV3L5zlS&width=2560', title: 'Vintage Cake Collection', desc: 'Classic vintage-styled celebration pieces', cat: 'birthday' },
+    ];
+
+    let currentIdx = 0;
+    let visibleItems = [...galleryItems];
+
+    function renderGallery(items) {
+      const grid = document.getElementById('galleryGrid');
+      grid.innerHTML = items.map((item, i) => `
+    <div class="masonry-item" onclick="openLightbox(${i})" style="animation-delay:${i * 0.05}s">
+      <img src="${item.src}" alt="${item.title}" loading="lazy">
+      <div class="masonry-overlay">
+        <h3>${item.title}</h3>
+        <p>${item.desc}</p>
+      </div>
+    </div>
+  `).join('');
+    }
+
+    function filterGallery(btn, cat) {
+      document.querySelectorAll('.gallery-filter-tabs .chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      visibleItems = cat === 'all' ? [...galleryItems] : galleryItems.filter(i => i.cat === cat);
+      renderGallery(visibleItems);
+    }
+
+    function openLightbox(idx) {
+      currentIdx = idx;
+      const item = visibleItems[idx];
+      document.getElementById('lightboxImg').src = item.src;
+      document.getElementById('lightboxImg').alt = item.title;
+      document.getElementById('lightboxTitle').textContent = item.title;
+      document.getElementById('lightboxDesc').textContent = item.desc;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function prevPhoto() {
+      currentIdx = (currentIdx - 1 + visibleItems.length) % visibleItems.length;
+      openLightbox(currentIdx);
+    }
+
+    function nextPhoto() {
+      currentIdx = (currentIdx + 1) % visibleItems.length;
+      openLightbox(currentIdx);
+    }
+
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (document.getElementById('lightbox').classList.contains('open')) {
+        if (e.key === 'ArrowLeft') prevPhoto();
+        if (e.key === 'ArrowRight') nextPhoto();
+        if (e.key === 'Escape') closeLightbox();
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => renderGallery(galleryItems));
+  </script>
+</body>
+
+</html>

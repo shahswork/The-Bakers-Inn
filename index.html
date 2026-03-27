@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Bakers Inn — Handcrafted Cakes & Desserts</title>
+  <meta name="description"
+    content="Premium handcrafted cakes for every occasion. Birthday cakes, wedding cakes, custom designs & cupcakes. Order via WhatsApp for quick local delivery.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- ── Announcement Bar ── -->
+  <div class="announcement-bar">
+    🎉 Free delivery on orders over $80! Use code <strong>The Bakers Inn</strong> · <a href="shop.html">Shop Now →</a>
+  </div>
+
+  <!-- ── Navigation ── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">🎂</div>
+        <div>
+          <div class="logo-text">The Bakers Inn</div>
+          <div class="logo-sub">Bakery & Patisserie</div>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="builder.html">Custom Cake</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="nav-cart-btn" id="cartToggle" aria-label="Shopping cart">
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <a href="https://wa.me/923111111987?text=Hi%20The%20Bakers%20Inn!%20I'd%20like%20to%20place%20an%20order."
+          target="_blank" class="btn btn-primary btn-sm">
+          <i class="fab fa-whatsapp"></i> Order Now
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">🏠 Home</a>
+    <a href="shop.html">🛍️ Shop</a>
+    <a href="builder.html">🎨 Custom Cake Builder</a>
+    <a href="gallery.html">📸 Gallery</a>
+    <a href="#contact">📍 Contact</a>
+    <div class="mobile-cta">
+      <a href="https://wa.me/923111111987" target="_blank" class="btn btn-whatsapp"
+        style="width:100%;justify-content:center;">
+        <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-shape hero-shape-1"></div>
+    <div class="hero-shape hero-shape-2"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <!-- Text -->
+        <div class="hero-content fade-up">
+          <div class="hero-badge">
+            <span class="dot"></span>
+            Freshly Baked Daily · Est. 1987
+          </div>
+          <h1 class="hero-title">
+            Every Bite is a <em>Sweet Dream</em> Come True
+          </h1>
+          <p class="hero-desc">
+            Handcrafted with love and the finest ingredients. From intimate birthday celebrations to grand weddings — we
+            bake memories that last a lifetime.
+          </p>
+          <div class="hero-actions">
+            <a href="shop.html" class="btn btn-primary btn-lg">
+              <i class="fas fa-birthday-cake"></i> Order a Cake
+            </a>
+            <a href="builder.html" class="btn btn-secondary btn-lg">
+              <i class="fas fa-magic"></i> Design Your Own
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-num">15K+</div>
+              <div class="stat-label">Happy Customers</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">98%</div>
+              <div class="stat-label">Satisfaction Rate</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">35+</div>
+              <div class="stat-label">Years of Joy</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual -->
+        <div class="hero-visual fade-up delay-2">
+          <div class="hero-img-wrap">
+            <img class="hero-img-main"
+              src="https://sspark.genspark.ai/cfimages?u1=rplYFRyqH1P2PT12CKB4Img4dQEPYSUEnfy8c4C6LNrqgx5T4prd2Qt0WFsOAHbeLNlawzMnPrrCDWIAe157KmiKlK%2BSk2ysrtAvp5CaFbwaIzY6VY3bGF6A0AvuNsc6s1OwOkr0C%2FBk5eI%3D&u2=nIkRhoX6rwjAXv6U&width=2560"
+              alt="Elegant birthday cake with pink frosting and flowers" loading="eager">
+            <img class="hero-img-accent"
+              src="https://sspark.genspark.ai/cfimages?u1=%2FT2%2BsGJjgvZFdFgBg70bInZhyD%2FipjyskQmPEMax8MCAjw6zeKKr7AgU5TK5uM5mwDHGGMbkPGvYfndQKCKUul972R467t594QLN332hIaUm%2Bw%3D%3D&u2=lqEl9P6xSDWYgGrx&width=2560"
+              alt="Assorted cupcakes" loading="eager">
+
+            <!-- Float cards -->
+            <div class="hero-float-card card-rating">
+              <span class="float-icon">⭐</span>
+              <div class="float-text">
+                <strong>4.3/5 Stars</strong>
+                <span>From 860+ reviews</span>
+              </div>
+            </div>
+            <div class="hero-float-card card-order">
+              <span class="float-icon">🎉</span>
+              <div class="float-text">
+                <strong>Order Ready!</strong>
+                <span>Same-day available</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURED CATEGORIES ── -->
+  <section class="section" style="background: var(--gray-soft);">
+    <div class="container">
+      <div class="text-center fade-up">
+        <span class="section-label">Browse Our Collection</span>
+        <h2 class="section-title">What Would You Like?</h2>
+        <div class="divider"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;margin-top:40px;">
+        <a href="shop.html?cat=birthday" class="fade-up delay-1" style="text-decoration:none;">
+          <div
+            style="background:white;border-radius:var(--radius);padding:32px 20px;text-align:center;box-shadow:var(--shadow-sm);transition:transform .3s,box-shadow .3s;cursor:pointer;"
+            onmouseenter="this.style.transform='translateY(-6px)';this.style.boxShadow='var(--shadow-lg)'"
+            onmouseleave="this.style.transform='';this.style.boxShadow='var(--shadow-sm)'">
+            <div style="font-size:3rem;margin-bottom:12px;">🎂</div>
+            <div
+              style="font-family:var(--font-serif);font-size:1.05rem;font-weight:600;color:var(--charcoal);margin-bottom:4px;">
+              Birthday Cakes</div>
+            <div style="font-size:.8rem;color:var(--gray-mid);">From 2000 PKR</div>
+          </div>
+        </a>
+        <a href="shop.html?cat=wedding" class="fade-up delay-2" style="text-decoration:none;">
+          <div
+            style="background:white;border-radius:var(--radius);padding:32px 20px;text-align:center;box-shadow:var(--shadow-sm);transition:transform .3s,box-shadow .3s;cursor:pointer;"
+            onmouseenter="this.style.transform='translateY(-6px)';this.style.boxShadow='var(--shadow-lg)'"
+            onmouseleave="this.style.transform='';this.style.boxShadow='var(--shadow-sm)'">
+            <div style="font-size:3rem;margin-bottom:12px;">💒</div>
+            <div
+              style="font-family:var(--font-serif);font-size:1.05rem;font-weight:600;color:var(--charcoal);margin-bottom:4px;">
+              Wedding Cakes</div>
+            <div style="font-size:.8rem;color:var(--gray-mid);">From 4500 PKR</div>
+          </div>
+        </a>
+        <a href="shop.html?cat=cupcakes" class="fade-up delay-3" style="text-decoration:none;">
+          <div
+            style="background:white;border-radius:var(--radius);padding:32px 20px;text-align:center;box-shadow:var(--shadow-sm);transition:transform .3s,box-shadow .3s;cursor:pointer;"
+            onmouseenter="this.style.transform='translateY(-6px)';this.style.boxShadow='var(--shadow-lg)'"
+            onmouseleave="this.style.transform='';this.style.boxShadow='var(--shadow-sm)'">
+            <div style="font-size:3rem;margin-bottom:12px;">🧁</div>
+            <div
+              style="font-family:var(--font-serif);font-size:1.05rem;font-weight:600;color:var(--charcoal);margin-bottom:4px;">
+              Cupcakes</div>
+            <div style="font-size:.8rem;color:var(--gray-mid);">From 250 PKR</div>
+          </div>
+        </a>
+        <a href="builder.html" class="fade-up delay-4" style="text-decoration:none;">
+          <div
+            style="background:linear-gradient(135deg,var(--blush),var(--cream));border-radius:var(--radius);padding:32px 20px;text-align:center;box-shadow:var(--shadow-sm);border:2px solid var(--rose-light);transition:transform .3s,box-shadow .3s;cursor:pointer;"
+            onmouseenter="this.style.transform='translateY(-6px)';this.style.boxShadow='var(--shadow-lg)'"
+            onmouseleave="this.style.transform='';this.style.boxShadow='var(--shadow-sm)'">
+            <div style="font-size:3rem;margin-bottom:12px;">✨</div>
+            <div
+              style="font-family:var(--font-serif);font-size:1.05rem;font-weight:600;color:var(--rose-deep);margin-bottom:4px;">
+              Custom Design</div>
+            <div style="font-size:.8rem;color:var(--gray-mid);">Your Vision</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── OFFERS & DEALS ── -->
+  <section class="section offer-section" id="offers">
+    <div class="container">
+      <div class="text-center fade-up" style="margin-bottom:40px;">
+        <span class="section-label" style="color:var(--gold-light);">Limited Time</span>
+        <h2 class="section-title" style="color:white;">Sweet Deals Just for You</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="offer-inner">
+        <!-- Offer 1 -->
+        <div class="offer-card fade-up delay-1">
+          <div class="offer-tag">🎉 Birthday Special</div>
+          <h3>Birthday Bundle Deal</h3>
+          <p>Get a 6-inch birthday cake + 12 matching cupcakes at an incredible price. Perfect for parties!</p>
+          <div class="offer-discount">25% OFF</div>
+          <div class="countdown" data-end="2025-12-31">
+            <div class="countdown-item"><span class="num" id="cd1-d">03</span><span class="lbl">Days</span></div>
+            <div class="countdown-item"><span class="num" id="cd1-h">12</span><span class="lbl">Hours</span></div>
+            <div class="countdown-item"><span class="num" id="cd1-m">45</span><span class="lbl">Mins</span></div>
+            <div class="countdown-item"><span class="num" id="cd1-s">20</span><span class="lbl">Secs</span></div>
+          </div>
+          <a href="https://wa.me/923111111987?text=Hi!%20I%20want%20the%20Birthday%20Bundle%20Deal!" target="_blank"
+            class="btn btn-gold btn-sm">
+            <i class="fab fa-whatsapp"></i> Claim This Deal
+          </a>
+        </div>
+
+        <!-- Offer 2 -->
+        <div class="offer-card fade-up delay-2">
+          <div class="offer-tag">💒 Wedding Season</div>
+          <h3>Wedding Cake Package</h3>
+          <p>3-tier wedding cake + consultation + free delivery within 15 miles. Book 30 days in advance.</p>
+          <div class="offer-discount">Free Delivery</div>
+          <p style="font-size:.8rem;opacity:.7;margin-bottom:16px;">Valid through December 2025</p>
+          <a href="https://wa.me/923111111987?text=Hi!%20I'm%20interested%20in%20the%20Wedding%20Cake%20Package."
+            target="_blank" class="btn btn-gold btn-sm">
+            <i class="fab fa-whatsapp"></i> Book Consultation
+          </a>
+        </div>
+
+        <!-- Offer 3 -->
+        <div class="offer-card fade-up delay-3">
+          <div class="offer-tag">🥳 Refer a Friend</div>
+          <h3>Refer & Earn</h3>
+          <p>Refer a friend who orders and BOTH of you get 150 PKR off your next order.</p>
+          <div class="offer-discount">10% OFF</div>
+          <p style="font-size:.8rem;opacity:.7;margin-bottom:16px;">Share your unique code when ordering</p>
+          <a href="https://wa.me/923111111987?text=Hi!%20I%20want%20to%20know%20about%20the%20referral%20program."
+            target="_blank" class="btn btn-gold btn-sm">
+            <i class="fab fa-whatsapp"></i> Get My Code
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BESTSELLERS ── -->
+  <section class="section" style="background: var(--cream);" id="menu">
+    <div class="container">
+      <div class="text-center fade-up" style="margin-bottom:40px;">
+        <span class="section-label">Customer Favorites</span>
+        <h2 class="section-title">Our Bestsellers</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle" style="margin: 16px auto 0;">
+          Hand-selected by our customers. Every cake is freshly baked and made-to-order.
+        </p>
+      </div>
+
+      <div class="products-grid" id="bestsellerGrid">
+        <!-- Cards inserted by JS -->
+      </div>
+
+      <div class="text-center" style="margin-top:40px;">
+        <a href="shop.html" class="btn btn-primary btn-lg fade-up">
+          View All Cakes <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY PREVIEW ── -->
+  <section class="section" id="gallery">
+    <div class="container">
+      <div class="text-center fade-up" style="margin-bottom:40px;">
+        <span class="section-label">Our Work</span>
+        <h2 class="section-title">Made with Love</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle" style="margin:16px auto 0;">Real cakes we've created for real celebrations. Every
+          one a unique masterpiece.</p>
+      </div>
+
+      <div class="gallery-grid fade-up">
+        <div class="gallery-item tall">
+          <img
+            src="https://sspark.genspark.ai/cfimages?u1=a21I9PPTtJSzKSRhyeePkZG164V9dlMMgZjcupU6zvU0uN3PPMwfRFhY%2B580ULPvzwAj%2FCxiL3xDr2ASWXpZDpJP%2FcrJa2iqgAfnZT5cCrVdUmU2d9geX6Ni2gRB%2BnskRCC2QJRVB2SY1dxUXhBQoP%2F%2B6ZsmlCPVK71I&u2=%2BbUkbHXdg8EQRpvW&width=2560"
+            alt="Elegant white wedding cake" loading="lazy">
+          <div class="gallery-overlay"><span>Elegant Wedding Cake</span></div>
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://sspark.genspark.ai/cfimages?u1=rplYFRyqH1P2PT12CKB4Img4dQEPYSUEnfy8c4C6LNrqgx5T4prd2Qt0WFsOAHbeLNlawzMnPrrCDWIAe157KmiKlK%2BSk2ysrtAvp5CaFbwaIzY6VY3bGF6A0AvuNsc6s1OwOkr0C%2FBk5eI%3D&u2=nIkRhoX6rwjAXv6U&width=2560"
+            alt="Fairytale birthday cake" loading="lazy">
+          <div class="gallery-overlay"><span>Fairytale Birthday</span></div>
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://sspark.genspark.ai/cfimages?u1=%2FT2%2BsGJjgvZFdFgBg70bInZhyD%2FipjyskQmPEMax8MCAjw6zeKKr7AgU5TK5uM5mwDHGGMbkPGvYfndQKCKUul972R467t594QLN332hIaUm%2Bw%3D%3D&u2=lqEl9P6xSDWYgGrx&width=2560"
+            alt="Assorted cupcakes" loading="lazy">
+          <div class="gallery-overlay"><span>Party Cupcakes</span></div>
+        </div>
+        <div class="gallery-item wide">
+          <img
+            src="https://sspark.genspark.ai/cfimages?u1=17%2FLDpq78ibkWskSlY8K23vSmLwUKPXdP5u4kRclwcn%2BtbF6rqjLnXLEllQIwfThZ4RuNAaI89QCljEo4OEDOwEXDaIiRuRS%2BzoGzGtdjlU5X9SuUJ%2BH%2Bf8BcbpWV%2BWf8Kyl9X1aX%2BpwJSvJAbSJqsIq1Be8fjH967jt6ix7lGguSZCsAvY%2BNDc9&u2=y%2FbjeMiYgYP%2BDaVb&width=2560"
+            alt="Four-tier wedding cake" loading="lazy">
+          <div class="gallery-overlay"><span>Royal Wedding Tier</span></div>
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://sspark.genspark.ai/cfimages?u1=SkS3MfSd4V5%2FPXgxVhTHKtYsP8DeHoiQjT2tutjLMSEP9tlInUR0RYJyjyJpEiewF11tszkzc71W3ci9oyFPOfoyGfeqENv8JjC7IDQQx1WE6uhSpFCuRz93y34knvAQNLccLbl86AxebrxSfiBRHmhCZBhwzPRNASEsGHTmImL5rqJWujQnH2j8U793qhmyG9jiiXKi7b6fI%2BPp1bpO5M3EjMW%2F6M1rMH7F1eRI6JQJ482swiMSh7Y4quCt047QLjK9WJgEv2zYxs7zeVbG1zPqSAsJEVJ134ZC&u2=A91XyIcNxRtmZqWw&width=2560"
+            alt="Custom artistic cake" loading="lazy">
+          <div class="gallery-overlay"><span>Custom Artistry</span></div>
+        </div>
+        <div class="gallery-item tall">
+          <img
+            src="https://sspark.genspark.ai/cfimages?u1=p4pbvIuDscmF8F0%2F1effKKx9t0mxvHv8hVbFE2GAwvwG2fvyYy%2Fv7MA7eCp8id3sxeyf0tIzu3k0lR1l8Ele%2Ff3CXM%2Bg%2FGQtULnSD0X22yh%2BInZ3gGk0Sc3cY%2Ba0xOBPr0T3DfZMkq6y0kECRNqS%2Fg%3D%3D&u2=3ZUV3T5hL1zSu0UH&width=2560"
+            alt="Sugar flower wedding cake" loading="lazy">
+          <div class="gallery-overlay"><span>Sugar Flower Magic</span></div>
+        </div>
+      </div>
+
+      <div class="text-center" style="margin-top:32px;">
+        <a href="gallery.html" class="btn btn-secondary btn-lg fade-up">
+          <i class="fas fa-images"></i> See Full Gallery
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ── -->
+  <section class="section" style="background:var(--blush);" id="reviews">
+    <div class="container">
+      <div class="text-center fade-up" style="margin-bottom:40px;">
+        <span class="section-label">Happy Customers</span>
+        <h2 class="section-title">Love from Our Community</h2>
+        <div class="divider"></div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;">
+          <span class="stars" style="font-size:1.2rem;">★★★★</span>
+          <span style="font-size:1rem;font-weight:700;">4.3</span>
+          <span style="color:var(--gray-mid);font-size:.9rem;">from 860 reviews</span>
+        </div>
+      </div>
+
+      <div class="testimonials-grid">
+        <!-- Testimonial cards rendered by JS -->
+      </div>
+
+      <div class="text-center" style="margin-top:32px;">
+        <a href="https://wa.me/923111111987?text=Hi!%20I%20want%20to%20leave%20a%20review." target="_blank"
+          class="btn btn-primary fade-up">
+          <i class="fas fa-star"></i> Leave a Review
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INSTAGRAM FEED ── -->
+  <section class="section-sm" style="background:var(--white);" id="instagram">
+    <div class="container">
+      <div class="text-center fade-up" style="margin-bottom:24px;">
+        <span class="section-label">Follow Along</span>
+        <h2 class="section-title" style="font-size:1.8rem;">
+          <i class="fab fa-instagram" style="color:#E1306C;margin-right:8px;"></i> @thebakers_inn
+        </h2>
+        <p class="section-subtitle" style="margin:8px auto 0;">Fresh bakes, behind-the-scenes, and beautiful creations.
+          Follow us for daily inspiration.</p>
+      </div>
+      <div class="instagram-grid fade-up">
+        <!-- Insta items inserted by JS -->
+      </div>
+      <div class="text-center" style="margin-top:20px;">
+        <a href="https://instagram.com/thebakers_inn" target="_blank" class="btn btn-secondary">
+          <i class="fab fa-instagram"></i> Follow on Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY US ── -->
+  <section class="section" style="background: var(--cream);">
+    <div class="container">
+      <div class="text-center fade-up" style="margin-bottom:48px;">
+        <span class="section-label">Why The Bakers Inn?</span>
+        <h2 class="section-title">Baked with Purpose</h2>
+        <div class="divider"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:28px;">
+        <div class="fade-up delay-1"
+          style="text-align:center;padding:32px 24px;background:white;border-radius:var(--radius);box-shadow:var(--shadow-sm);">
+          <div style="font-size:2.5rem;margin-bottom:16px;">🌿</div>
+          <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin-bottom:8px;">Premium
+            Ingredients</h3>
+          <p style="font-size:.875rem;color:var(--gray-mid);line-height:1.7;">We source only the finest organic butter,
+            real vanilla, and fresh seasonal fruits.</p>
+        </div>
+        <div class="fade-up delay-2"
+          style="text-align:center;padding:32px 24px;background:white;border-radius:var(--radius);box-shadow:var(--shadow-sm);">
+          <div style="font-size:2.5rem;margin-bottom:16px;">👩‍🍳</div>
+          <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin-bottom:8px;">Master Bakers
+          </h3>
+          <p style="font-size:.875rem;color:var(--gray-mid);line-height:1.7;">Our award-winning pastry chefs have
+            trained at world-class culinary schools.</p>
+        </div>
+        <div class="fade-up delay-3"
+          style="text-align:center;padding:32px 24px;background:white;border-radius:var(--radius);box-shadow:var(--shadow-sm);">
+          <div style="font-size:2.5rem;margin-bottom:16px;">🚀</div>
+          <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin-bottom:8px;">Same-Day
+            Delivery</h3>
+          <p style="font-size:.875rem;color:var(--gray-mid);line-height:1.7;">Order before noon for same-day delivery
+            within our service area. Always fresh, never frozen.</p>
+        </div>
+        <div class="fade-up delay-4"
+          style="text-align:center;padding:32px 24px;background:white;border-radius:var(--radius);box-shadow:var(--shadow-sm);">
+          <div style="font-size:2.5rem;margin-bottom:16px;">💯</div>
+          <h3 style="font-family:var(--font-serif);font-size:1.1rem;font-weight:700;margin-bottom:8px;">Satisfaction
+            Guaranteed</h3>
+          <p style="font-size:.875rem;color:var(--gray-mid);line-height:1.7;">Not 100% happy? We'll make it right — full
+            remake or refund, no questions asked.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT & LOCATION ── -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="fade-up" style="margin-bottom:48px;">
+        <span class="section-label">Find Us</span>
+        <h2 class="section-title">Come Visit or Order Online</h2>
+        <div class="divider divider-left"></div>
+      </div>
+
+      <div class="contact-grid">
+        <div>
+          <!-- Contact Items -->
+          <div class="contact-item fade-up delay-1">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <h4>Our Bakery</h4>
+              <p>D Ground Block B People's Colony No 1<br>Faisalabad, 38000</p>
+            </div>
+          </div>
+          <div class="contact-item fade-up delay-2">
+            <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+            <div>
+              <h4>WhatsApp Orders</h4>
+              <a href="https://wa.me/923111111987" target="_blank">+92 311 1111 987</a>
+              <p>Usually replies in under 30 mins</p>
+            </div>
+          </div>
+          <div class="contact-item fade-up delay-3">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <h4>Email Us</h4>
+              <a href="mailto:contact@thebakersinn.com">contact@thebakersinn.com</a>
+              <p>For custom orders & partnerships</p>
+            </div>
+          </div>
+
+          <!-- Hours -->
+          <div class="fade-up delay-4"
+            style="background:white;border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);overflow:hidden;margin-top:4px;">
+            <div style="padding:16px 20px;background:var(--blush);border-bottom:1px solid var(--rose-light);">
+              <strong style="font-family:var(--font-serif);">Business Hours</strong>
+              <span class="open-badge" style="float:right;margin-top:2px;">Open Now</span>
+            </div>
+            <div style="padding:8px 20px;">
+              <table class="hours-table">
+                <tr>
+                  <td>Monday – Sunday</td>
+                  <td>7:00 AM – 1:00 AM</td>
+                </tr>
+                <tr>
+                  <td>Public Holidays</td>
+                  <td>7:00 AM – 1:00 AM</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="fade-up delay-2">
+          <div class="map-embed" style="height:280px;margin-bottom:20px;">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6343.292681942256!2d73.10901596558118!3d31.40911567937818!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3922680b70a7cb71%3A0xa1edc330bac0fdbf!2sThe%20Bakers%20Inn!5e0!3m2!1sen!2sus!4v1774594558666!5m2!1sen!2sus"
+              allowfullscreen="" loading="lazy" title="Bakery Location">
+            </iframe>
+          </div>
+          <!-- Quick Order via WA -->
+          <div
+            style="background:linear-gradient(135deg,#25D366,#20bd5a);border-radius:var(--radius);padding:28px;color:white;text-align:center;">
+            <div style="font-size:2.5rem;margin-bottom:12px;">💬</div>
+            <h3 style="font-family:var(--font-serif);font-size:1.2rem;font-weight:700;margin-bottom:8px;">Order via
+              WhatsApp</h3>
+            <p style="font-size:.875rem;opacity:.9;margin-bottom:20px;">The fastest way to place an order. Chat with us
+              directly and we'll handle everything!</p>
+            <a href="https://wa.me/923111111987?text=Hi%20The%20Bakers%20Inn!%20I'd%20like%20to%20place%20an%20order."
+              target="_blank" class="btn"
+              style="background:white;color:#25D366;font-weight:700;border-radius:50px;padding:14px 28px;display:inline-flex;align-items:center;gap:8px;">
+              <i class="fab fa-whatsapp" style="font-size:1.2rem;"></i> Start Chatting Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">🎂 The Bakers Inn</div>
+          <p>Handcrafted cakes for every occasion. Made with premium ingredients, baked with love, delivered to your
+            door.</p>
+          <div class="social-links">
+            <a href="https://instagram.com/thebakers_inn" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://facebook.com/thebakerspak" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" class="social-link" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+            <a href="https://wa.me/923111111987" class="social-link" target="_blank" aria-label="WhatsApp"><i
+                class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop All Cakes</a>
+            <a href="builder.html">Custom Cake Builder</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="#contact">Contact Us</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Categories</h4>
+          <div class="footer-links">
+            <a href="shop.html?cat=birthday">🎂 Birthday Cakes</a>
+            <a href="shop.html?cat=wedding">💒 Wedding Cakes</a>
+            <a href="shop.html?cat=cupcakes">🧁 Cupcakes</a>
+            <a href="shop.html?cat=custom">✨ Custom Cakes</a>
+            <a href="shop.html?cat=seasonal">🍂 Seasonal Specials</a>
+          </div>
+        </div>
+        <div class="footer-newsletter footer-col">
+          <h4>Sweet Updates</h4>
+          <p>Subscribe for exclusive deals, new flavors, and baking inspiration.</p>
+          <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+            <input type="email" placeholder="Your email address" required>
+            <button type="submit">Join</button>
+          </form>
+          <div style="margin-top:16px;font-size:.8rem;color:rgba(255,255,255,.5);">
+            🔒 No spam, unsubscribe anytime
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="background:rgba(0,0,0,.2);">
+      <div class="container">
+        <div class="footer-bottom">
+          <span>© 2025 The Bakers Inn. All rights reserved.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── CART SIDEBAR ── -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>🛒 Your Cart</h3>
+      <button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="empty-icon">🎂</div>
+        <strong>Your cart is empty</strong>
+        <p>Add some delicious cakes to get started!</p>
+        <a href="shop.html" class="btn btn-primary btn-sm" style="margin-top:12px;">Browse Cakes</a>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-totals">
+        <div class="cart-total-row"><span>Subtotal</span><span id="cartSubtotal">Rs 0.00</span></div>
+        <div class="cart-total-row"><span>Delivery</span><span id="cartDelivery">Rs 320.00</span></div>
+        <div class="cart-total-row total"><span>Total</span><span id="cartTotal">Rs 0.00</span></div>
+      </div>
+      <div class="cart-checkout-btns">
+        <a href="https://wa.me/923111111987" target="_blank" id="cartWhatsApp" class="btn btn-whatsapp">
+          <i class="fab fa-whatsapp"></i> Order via WhatsApp
+        </a>
+        <button class="btn btn-primary" onclick="proceedToCheckout()">
+          <i class="fas fa-credit-card"></i> Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STICKY WHATSAPP ── -->
+  <a href="https://wa.me/923111111987?text=Hi%20The%20Bakers%20Inn!%20I'd%20like%20to%20place%20an%20order."
+    target="_blank" class="sticky-wa" aria-label="Order via WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- ── LIGHTBOX ── -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img src="" alt="" id="lightboxImg">
+  </div>
+
+  <!-- ── TOAST ── -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script>
+    // Inline page-specific init
+    document.addEventListener('DOMContentLoaded', () => {
+      renderBestsellers();
+      renderTestimonials();
+      renderInstagram();
+      startCountdown();
+    });
+
+    function renderBestsellers() {
+      const items = window.PRODUCTS ? window.PRODUCTS.slice(0, 4) : getFallbackProducts().slice(0, 4);
+      const grid = document.getElementById('bestsellerGrid');
+      if (!grid) return;
+      grid.innerHTML = items.map(p => createProductCard(p)).join('');
+      grid.querySelectorAll('.fade-up').forEach((el, i) => {
+        el.style.transitionDelay = (i * .1) + 's';
+        setTimeout(() => observeFadeUp(el), 0);
+      });
+    }
+
+    function renderTestimonials() {
+      const container = document.querySelector('.testimonials-grid');
+      if (!container) return;
+      const reviews = getTestimonials();
+      container.innerHTML = reviews.map((r, i) => `
+    <div class="testimonial-card fade-up delay-${(i % 4) + 1}">
+      <div class="t-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+      <p class="t-text">"${r.text}"</p>
+      <div class="t-author">
+        <div style="width:46px;height:46px;border-radius:50%;background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:1.4rem;border:3px solid var(--rose-light);">${r.avatar}</div>
+        <div>
+          <div class="t-name">${r.name}</div>
+          <div class="t-handle">${r.occasion}</div>
+          <div class="t-verified"><i class="fas fa-check-circle"></i> Verified Order</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+    }
+
+    function renderInstagram() {
+      const grid = document.querySelector('.instagram-grid');
+      if (!grid) return;
+      const posts = [
+        { img: 'https://sspark.genspark.ai/cfimages?u1=rplYFRyqH1P2PT12CKB4Img4dQEPYSUEnfy8c4C6LNrqgx5T4prd2Qt0WFsOAHbeLNlawzMnPrrCDWIAe157KmiKlK%2BSk2ysrtAvp5CaFbwaIzY6VY3bGF6A0AvuNsc6s1OwOkr0C%2FBk5eI%3D&u2=nIkRhoX6rwjAXv6U&width=2560', likes: '1.2K', alt: 'Birthday cake' },
+        { img: 'https://sspark.genspark.ai/cfimages?u1=a21I9PPTtJSzKSRhyeePkZG164V9dlMMgZjcupU6zvU0uN3PPMwfRFhY%2B580ULPvzwAj%2FCxiL3xDr2ASWXpZDpJP%2FcrJa2iqgAfnZT5cCrVdUmU2d9geX6Ni2gRB%2BnskRCC2QJRVB2SY1dxUXhBQoP%2F%2B6ZsmlCPVK71I&u2=%2BbUkbHXdg8EQRpvW&width=2560', likes: '2.3K', alt: 'Wedding cake' },
+        { img: 'https://sspark.genspark.ai/cfimages?u1=%2FT2%2BsGJjgvZFdFgBg70bInZhyD%2FipjyskQmPEMax8MCAjw6zeKKr7AgU5TK5uM5mwDHGGMbkPGvYfndQKCKUul972R467t594QLN332hIaUm%2Bw%3D%3D&u2=lqEl9P6xSDWYgGrx&width=2560', likes: '856', alt: 'Cupcakes' },
+        { img: 'https://sspark.genspark.ai/cfimages?u1=p4pbvIuDscmF8F0%2F1effKKx9t0mxvHv8hVbFE2GAwvwG2fvyYy%2Fv7MA7eCp8id3sxeyf0tIzu3k0lR1l8Ele%2Ff3CXM%2Bg%2FGQtULnSD0X22yh%2BInZ3gGk0Sc3cY%2Ba0xOBPr0T3DfZMkq6y0kECRNqS%2Fg%3D%3D&u2=3ZUV3T5hL1zSu0UH&width=2560', likes: '1.8K', alt: 'Sugar flower cake' },
+        { img: 'https://sspark.genspark.ai/cfimages?u1=17%2FLDpq78ibkWskSlY8K23vSmLwUKPXdP5u4kRclwcn%2BtbF6rqjLnXLEllQIwfThZ4RuNAaI89QCljEo4OEDOwEXDaIiRuRS%2BzoGzGtdjlU5X9SuUJ%2BH%2Bf8BcbpWV%2BWf8Kyl9X1aX%2BpwJSvJAbSJqsIq1Be8fjH967jt6ix7lGguSZCsAvY%2BNDc9&u2=y%2FbjeMiYgYP%2BDaVb&width=2560', likes: '3.1K', alt: 'Wedding tier' },
+        { img: 'https://sspark.genspark.ai/cfimages?u1=SkS3MfSd4V5%2FPXgxVhTHKtYsP8DeHoiQjT2tutjLMSEP9tlInUR0RYJyjyJpEiewF11tszkzc71W3ci9oyFPOfoyGfeqENv8JjC7IDQQx1WE6uhSpFCuRz93y34knvAQNLccLbl86AxebrxSfiBRHmhCZBhwzPRNASEsGHTmImL5rqJWujQnH2j8U793qhmyG9jiiXKi7b6fI%2BPp1bpO5M3EjMW%2F6M1rMH7F1eRI6JQJ482swiMSh7Y4quCt047QLjK9WJgEv2zYxs7zeVbG1zPqSAsJEVJ134ZC&u2=A91XyIcNxRtmZqWw&width=2560', likes: '967', alt: 'Custom cake' },
+      ];
+      grid.innerHTML = posts.map(p => `
+    <div class="insta-item">
+      <img src="${p.img}" alt="${p.alt}" loading="lazy">
+      <div class="insta-overlay">
+        <i class="fas fa-heart"></i>
+        <span>${p.likes}</span>
+      </div>
+    </div>
+  `).join('');
+    }
+
+    function handleNewsletter(e) {
+      e.preventDefault();
+      showToast('🎉 You\'re subscribed! Welcome to the Bakers Inn family.', 'success');
+      e.target.reset();
+    }
+  </script>
+</body>
+
+</html>
