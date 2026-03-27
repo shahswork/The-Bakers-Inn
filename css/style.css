@@ -2204,6 +2204,10 @@ ul {
     width: 280px;
     height: 320px;
   }
+  
+  .laptop-chatnow{
+  display: none;
+}
 
   .hero-float-card {
     display: none;
