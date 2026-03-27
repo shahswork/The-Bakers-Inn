@@ -2164,6 +2164,9 @@ ul {
   .nav-links {
     display: none;
   }
+   .laptop-chatnow{
+  display: none;
+}
 
   .hamburger {
     display: flex;
