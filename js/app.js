@@ -240,7 +240,6 @@ function createProductCard(p) {
         <img src="${p.image}" alt="${p.name}" loading="lazy">
         ${p.badge ? `<span class="card-badge ${p.badgeType || ''}">${p.badge}</span>` : ''}
         ${discount > 0 ? `<span class="card-badge" style="left:auto;right:12px;background:var(--brown);">-${discount}%</span>` : ''}
-        <button class="card-wishlist" onclick="toggleWishlist(this, '${p.id}')" aria-label="Add to wishlist">♡</button>
       </div>
       <div class="card-body">
         <div class="card-category">${p.categoryLabel}</div>
