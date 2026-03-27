@@ -507,6 +507,47 @@
           </div>
         </div>
 
+        <script>
+          function updateOpenStatus() {
+  const badge = document.querySelector(".open-badge");
+  const now = new Date();
+
+  const currentTime = now.getHours() * 60 + now.getMinutes();
+
+  // 7:00 AM → 1:00 AM (next day)
+  const openTime = 7 * 60;   // 420
+  const closeTime = 1 * 60;  // 60
+
+  let isOpen;
+
+  if (currentTime >= openTime) {
+    isOpen = true; // 7:00 AM → midnight
+  } else if (currentTime < closeTime) {
+    isOpen = true; // midnight → 1:00 AM
+  } else {
+    isOpen = false;
+  }
+
+  if (isOpen) {
+    badge.textContent = "Open Now";
+    badge.style.background = "#e8f8f0";
+    badge.style.color = "#3aab6d";
+    badge.style.setProperty("--dot-color", "#3aab6d");
+  } else {
+    badge.textContent = "Closed";
+    badge.style.background = "#fdecea";
+    badge.style.color = "#d9534f";
+    badge.style.setProperty("--dot-color", "#d9534f");
+  }
+}
+
+// Run on load
+updateOpenStatus();
+
+// Optional: update every minute
+setInterval(updateOpenStatus, 60000);
+        </script>
+
         <div class="fade-up delay-2">
           <div class="map-embed" style="height:280px;margin-bottom:20px;">
             <iframe
