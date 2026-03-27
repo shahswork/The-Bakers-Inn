@@ -262,7 +262,7 @@ function createProductCard(p) {
           </div>
         </div>
         <!-- WhatsApp order button -->
-        <a href="https://wa.me/15551234567?text=Hi!%20I'd%20like%20to%20order%20the%20${encodeURIComponent(p.name)}%20for%20$${p.price}" 
+        <a href="https://wa.me/923111111987?text=Hi!%20I'd%20like%20to%20order%20the%20${encodeURIComponent(p.name)}%20for%20$${p.price}" 
            target="_blank" class="btn btn-whatsapp" style="width:100%;justify-content:center;margin-top:10px;font-size:.82rem;padding:10px;">
           <i class="fab fa-whatsapp"></i> Order via WhatsApp
         </a>
@@ -362,7 +362,7 @@ function renderCart() {
   const waEl = document.getElementById('cartWhatsApp');
   if (waEl) {
     const msg = `Hi The Bakers Inn! I'd like to order:\n\n${cart.map(i => `• ${i.qty}x ${i.name} — $${(i.price*i.qty).toFixed(2)}`).join('\n')}\n\n💰 Total: Rs ${total.toFixed(2)}`;
-    waEl.href = `https://wa.me/15551234567?text=${encodeURIComponent(msg)}`;
+    waEl.href = `https://wa.me/923111111987?text=${encodeURIComponent(msg)}`;
   }
 }
 
@@ -396,7 +396,7 @@ function proceedToCheckout() {
   const delivery = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FEE;
   const total = subtotal + delivery;
   const msg = `Hi The Bakers Inn! I'd like to checkout:\n\n${cart.map(i => `• ${i.qty}x ${i.name} — Rs ${(i.price*i.qty).toFixed(2)}`).join('\n')}\n\n💰 Total: Rs ${total.toFixed(2)}\n\nPlease confirm my order!`;
-  window.open(`https://wa.me/15551234567?text=${encodeURIComponent(msg)}`, '_blank');
+  window.open(`https://wa.me/923111111987?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 
